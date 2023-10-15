@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>keepaste</artifactId>
+        <groupId>com.keepaste</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>logic</artifactId>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.keepaste</groupId>
+            <artifactId>gui</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.14.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                &lt;!&ndash; Here come other details-->
+<!--                ...-->
+<!--                &ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--&lt;!&ndash;                            <addClasspath>true</addClasspath>&ndash;&gt;-->
+<!--                            <mainClass>com.keepaste.logic.Application</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                </configuration>-->
+<!--                &lt;!&ndash; Here come other details-->
+<!--                ...-->
+<!--                &ndash;&gt;-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>11</source>-->
+<!--                    <target>11</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+
+
+            <!-- used to enable running the jar as it becomes a fat jar while pointing to the main method of the application -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>com.keepaste.logic.Application</Main-Class>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                            <finalName>Keepaste-${project.version}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- used to create an .app and .dmg file for mac os -->
+<!--            <plugin>-->
+<!--                <groupId>de.perdian.maven.plugins</groupId>-->
+<!--                <artifactId>macosappbundler-maven-plugin</artifactId>-->
+<!--                <version>1.19.0</version>-->
+<!--                <configuration>-->
+<!--                    <plist>-->
+<!--                        <CFBundleDisplayName>Keepaste</CFBundleDisplayName>-->
+<!--                        <CFBundleExecutable>Keepaste</CFBundleExecutable>-->
+<!--                        <CFBundleName>Keepaste</CFBundleName>-->
+<!--                        <CFBundleShortVersionString>${project.version}</CFBundleShortVersionString>-->
+<!--                        <CFBundleIconFile>logoicon.ico</CFBundleIconFile>-->
+<!--                        <JVMMainClassName>com.keepaste.logic.Application</JVMMainClassName>-->
+<!--                        <JVMVersion>11+</JVMVersion>-->
+<!--                        &lt;!&ndash; thought this one was needed for logo on Macs &ndash;&gt;-->
+<!--                        <JVMArguments>-->
+<!--                            <string>&#45;&#45;add-exports</string>-->
+<!--                            <string>java.desktop/com.apple.eawt=ALL-UNNAMED</string>-->
+<!--                        </JVMArguments>-->
+<!--                    </plist>-->
+<!--                    <dmg>-->
+<!--                        <generate>true</generate>-->
+<!--                        <additionalResources>-->
+<!--                            <additionalResource>-->
+<!--                                <directory>src/bundle/macos/distribution</directory>-->
+<!--                            </additionalResource>-->
+<!--                        </additionalResources>-->
+<!--                    </dmg>-->
+<!--&lt;!&ndash;                    <codesign>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <identity>3rd Party Mac Developer Application: Tamir Krispis (tamirkrispis@gmail.com)</identity>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </codesign>&ndash;&gt;-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>bundle</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+            <!-- used to create an .exe file for Windows -->
+<!--            <plugin>-->
+<!--                <groupId>com.akathist.maven.plugins.launch4j</groupId>-->
+<!--                <artifactId>launch4j-maven-plugin</artifactId>-->
+<!--                <version>2.3.3</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>l4j-clui</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>launch4j</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <headerType>gui</headerType>-->
+<!--                            <outfile>target/Keepaste-${project.version}.exe</outfile>-->
+<!--                            <jar>target/logic-1.0-SNAPSHOT.jar</jar>-->
+<!--                            <classPath>-->
+<!--                                <mainClass>com.keepaste.logic.Application</mainClass>-->
+<!--                            </classPath>-->
+<!--                            <icon>logoicon.ico</icon>-->
+<!--                            <jre>-->
+<!--                                <minVersion>1.5.0</minVersion>-->
+<!--                                <initialHeapSize>512</initialHeapSize>-->
+<!--                                <maxHeapSize>1024</maxHeapSize>-->
+<!--                                <path>/Users/tamir/Library/Java/JavaVirtualMachines/corretto-11.0.18/Contents/Home</path>-->
+<!--                            </jre>-->
+<!--                            <versionInfo>-->
+<!--                                <fileVersion>1.0.0.0</fileVersion>-->
+<!--                                <txtFileVersion>1.0.0.0</txtFileVersion>-->
+<!--                                <fileDescription>des</fileDescription>-->
+<!--                                <copyright>Copyright (c) 2014 </copyright>-->
+<!--                                <companyName>comp</companyName>-->
+<!--                                <productVersion>3.0.0.0</productVersion>-->
+<!--                                <txtProductVersion>${project.version}</txtProductVersion>-->
+<!--                                <productName>Project</productName>-->
+<!--                                <internalName>Project</internalName>-->
+<!--                                <originalFilename>Project.exe</originalFilename>-->
+<!--                            </versionInfo>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+        </plugins>
+    </build>
+</project>
