@@ -33,7 +33,7 @@ import java.util.List;
 @Log4j2
 public class FileSystemUtils {
 
-    private static final String HOME_DIRECTORY = System.getProperty("user.home").concat("/.keepaste");
+    private static final String HOME_DIRECTORY = System.getProperty("user.home");
 
     private FileSystemUtils() {
         // private constructor for utils class
@@ -90,10 +90,14 @@ public class FileSystemUtils {
         return false;
     }
 
-    public static String getHomeDirectory() {
-        String path = HOME_DIRECTORY;
+    public static String getKeepasteDirectory() {
+        String path = HOME_DIRECTORY.concat("/.keepaste");
         createDirectoryIfNotExists(path);
         return path;
+    }
+
+    public static String getUserHomeDirectory() {
+        return HOME_DIRECTORY;
     }
 
     public static boolean isHomeDirectoryExists() {

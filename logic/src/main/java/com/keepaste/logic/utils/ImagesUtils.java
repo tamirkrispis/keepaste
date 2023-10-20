@@ -176,8 +176,8 @@ public final class ImagesUtils {
     }
 
     private static String getCommandsIconsPath(String commandExecutable) {
-        FileSystemUtils.createDirectoryIfNotExists(FileSystemUtils.getHomeDirectory().concat("/commands_icons"));
-        return FileSystemUtils.getHomeDirectory().concat("/commands_icons/".concat(commandExecutable).concat(".png"));
+        FileSystemUtils.createDirectoryIfNotExists(FileSystemUtils.getKeepasteDirectory().concat("/commands_icons"));
+        return FileSystemUtils.getKeepasteDirectory().concat("/commands_icons/".concat(commandExecutable).concat(".png"));
     }
 
     private static Color getCommandColor(String command) {

@@ -103,7 +103,7 @@ public final class WindowsWindowsManager extends BaseWindowManager implements Wi
             }
             return null;
         } catch (Exception ex) {
-            log.error("Failed to get active window", ex);
+            log.debug("Failed to get active window", ex);
             return null;
         }
     }
@@ -144,7 +144,7 @@ public final class WindowsWindowsManager extends BaseWindowManager implements Wi
             Native.register("user32");
         }
 
-//        public static native int GetWindowThreadProcessId(HWND hWnd, PointerByReference pref);
+        //        public static native int GetWindowThreadProcessId(HWND hWnd, PointerByReference pref);
 //        public static native HWND GetForegroundWindow();
 //        public static native int GetWindowTextW(HWND hWnd, char[] lpString, int nMaxCount);
         public static native WinDef.HWND SetFocus(WinDef.HWND hWnd);

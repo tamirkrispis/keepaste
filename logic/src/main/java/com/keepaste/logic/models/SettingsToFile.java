@@ -17,4 +17,5 @@ public class SettingsToFile {
     private boolean pressEnterAfterPaste;
     private String themeClassName;
     private boolean alwaysOnTop;
+    private String path;
 }
