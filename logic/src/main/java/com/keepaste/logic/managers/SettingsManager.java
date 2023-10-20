@@ -40,7 +40,7 @@ public abstract class SettingsManager {
             .pressEnterAfterPaste(true)
             .themeClassName("FlatMacDarkLaf")
             .alwaysOnTop(true)
-            .path("/usr/local/bin:/usr/bin:/bin")
+            .path(System.getenv("PATH"))
             .build();
 
     private static final ObjectMapper MAPPER = new ObjectMapper();

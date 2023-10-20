@@ -110,10 +110,12 @@ public class ViewTopMenu {
         themesMenuItem.add(lightModeRadioMenuItem);
         settingsMenu.add(themesMenuItem);
 
-        JMenuItem pathMenuItem = new JMenuItem("$PATH");
-        PathMenuItemActionListener pathMenuItemActionListener = new PathMenuItemActionListener();
-        pathMenuItem.addActionListener(pathMenuItemActionListener);
-        settingsMenu.add(pathMenuItem);
+        if (OperatingSystemUtils.getOperatingSystemType() != OperatingSystemUtils.OperatingSystemType.WINDOWS) {
+            JMenuItem pathMenuItem = new JMenuItem("$PATH");
+            PathMenuItemActionListener pathMenuItemActionListener = new PathMenuItemActionListener();
+            pathMenuItem.addActionListener(pathMenuItemActionListener);
+            settingsMenu.add(pathMenuItem);
+        }
 
         menuItemMain.add(settingsMenu);
         menuItemMain.add(new JSeparator());

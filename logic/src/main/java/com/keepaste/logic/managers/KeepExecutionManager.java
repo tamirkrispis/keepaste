@@ -206,12 +206,6 @@ public final class KeepExecutionManager {
         // Set the working directory for the process
         processBuilder.directory(new File(FileSystemUtils.getUserHomeDirectory()));
 
-        if (!defaultPath) {
-            // Get the environment variables
-            Map<String, String> environment = processBuilder.environment();
-            environment.put("PATH", Application.getContext().getModelSettings().getPath());
-        }
-
         List<String> newKeep = new ArrayList<>();
 
         OperatingSystemUtils.OperatingSystemType os = OperatingSystemUtils.getOperatingSystemType();
@@ -231,6 +225,12 @@ public final class KeepExecutionManager {
             case OperatingSystemUtils.LINUX:
             case OperatingSystemUtils.OTHER:
             default:
+                if (!defaultPath) {
+                    // Get the environment variables
+                    Map<String, String> environment = processBuilder.environment();
+                    environment.put("PATH", Application.getContext().getModelSettings().getPath());
+                }
+
                 newKeep.add(shell);
                 newKeep.add("-c");
                 newKeep.addAll(commandLines);
