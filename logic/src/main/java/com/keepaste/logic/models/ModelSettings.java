@@ -18,6 +18,7 @@
 
 package com.keepaste.logic.models;
 
+import com.keepaste.logic.managers.SettingsManager;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,19 +28,30 @@ import javax.swing.*;
  * This class represents the settings model.
  */
 @Builder
-@Getter
 public class ModelSettings extends BaseModel {
     public static final String LINE_SEPARATOR = "line.separator";
+
     // execution flow - if to copy the Keep to the Clipboard.
+    @Getter
     private boolean copyToClipboard;
+
     // execution flow - if to focus on the active window and paste the Keep's phrase.
+    @Getter
     private boolean focusOnWindowAndPaste;
+
     // execution flow - if to press the 'Enter' key after pasting, to execute the phrase.
+    @Getter
     private boolean pressEnterAfterPaste;
+
     // the set GUI theme
     private LookAndFeel theme;
+
     // if the window should be always on top
+    @Getter
     private boolean alwaysOnTop;
+
+    // the PATH env var to use when running parameter commands in the background
+    private String path;
 
     /**
      * If to copy the Keep to the Clipboard.
@@ -88,6 +100,23 @@ public class ModelSettings extends BaseModel {
     public void setAlwaysOnTop(final boolean value) {
         this.alwaysOnTop = value;
         updateAllObservers(this);
+    }
+
+    /**
+     * PATH environment variable to be used when running parameter commands.
+     * @param value the value
+     */
+    public void setPath(final String value) {
+        this.path = value;
+        updateAllObservers(this);
+    }
+
+    public LookAndFeel getTheme() {
+        return theme == null ? SettingsManager.getDefaultModelSettings().getTheme() : theme;
+    }
+
+    public String getPath() {
+        return path == null ? SettingsManager.getDefaultModelSettings().getPath() : path;
     }
 
     @Override

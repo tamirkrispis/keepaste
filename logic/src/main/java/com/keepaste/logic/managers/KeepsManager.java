@@ -179,7 +179,7 @@ public final class KeepsManager {
      * @return the path to the keeps file.
      */
     public String getKeepsFilePathString() {
-        return FileSystemUtils.getHomeDirectory().concat("/keeps.json");
+        return FileSystemUtils.getKeepasteDirectory().concat("/keeps.json");
     }
 
     /* ***************** PRIVATE METHODS ***************** */
@@ -235,6 +235,6 @@ public final class KeepsManager {
     }
 
     private String getKeepsBackupFilePathString() {
-        return FileSystemUtils.getHomeDirectory().concat("/keeps_bck.json");
+        return FileSystemUtils.getKeepasteDirectory().concat("/keeps_bck.json");
     }
 }

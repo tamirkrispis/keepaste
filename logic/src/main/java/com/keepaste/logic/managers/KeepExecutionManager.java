@@ -5,6 +5,7 @@ import com.keepaste.logic.models.Keep;
 import com.keepaste.logic.models.KeepParameter;
 import com.keepaste.logic.models.WindowInformation;
 import com.keepaste.logic.utils.ClipboardUtils;
+import com.keepaste.logic.utils.FileSystemUtils;
 import com.keepaste.logic.utils.KeyboardUtils;
 import com.keepaste.logic.utils.OperatingSystemUtils;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,6 +37,18 @@ public final class KeepExecutionManager {
     public static final String FAILED_TO_EXECUTE_KEEP = "Failed to execute keep";
     @Getter
     private static final Map<String, String> globalParameterValuesMap = new HashMap<>();
+
+    private String shell = "/bin/bash";
+
+    public KeepExecutionManager() throws Exception {
+        if (OperatingSystemUtils.getOperatingSystemType() != OperatingSystemUtils.OperatingSystemType.WINDOWS) {
+            List<String> shellValue = executeCommandWithDefaultPath("echo $SHELL");
+            if (!shellValue.isEmpty()) {
+                shell = shellValue.get(0);
+            }
+        }
+    }
+
 
     /**
      * Executed a selected {@link Keep} on the currently active window.
@@ -162,20 +176,42 @@ public final class KeepExecutionManager {
      * @throws IOException in case of execution failure
      * @throws InterruptedException in case of execution failure
      */
-    public List<String> executeCommand(String command) throws Exception {
-        return executeCommand(List.of(command));
+    public List<String> executeCommandWithDefaultPath(String command) throws Exception {
+        return executeCommand(List.of(command), true);
     }
 
     /**
      * Will execute a command in shell and return its output as a list of Strings.
      *
-     * @param commandLines the command lines to execute
+     * @param command the command to execute
      * @return  the execution output
      * @throws IOException in case of execution failure
      * @throws InterruptedException in case of execution failure
      */
-    public List<String> executeCommand(List<String> commandLines) throws Exception {
+    public List<String> executeCommand(String command) throws Exception {
+        return executeCommand(List.of(command), false);
+    }
+
+    /**
+     * Will execute a command in shell and return its output as a list of Strings.
+     *
+     * @param commandLines  the command lines to execute
+     * @param defaultPath   will use the default PATH env var and not the one set by the user, used for Keepaste internal commands (like intercepting the currently active window)
+     * @return  the execution output
+     * @throws IOException in case of execution failure
+     * @throws InterruptedException in case of execution failure
+     */
+    public List<String> executeCommand(List<String> commandLines, boolean defaultPath) throws Exception {
         ProcessBuilder processBuilder = new ProcessBuilder();
+        // Set the working directory for the process
+        processBuilder.directory(new File(FileSystemUtils.getUserHomeDirectory()));
+
+        if (!defaultPath) {
+            // Get the environment variables
+            Map<String, String> environment = processBuilder.environment();
+            environment.put("PATH", Application.getContext().getModelSettings().getPath());
+        }
+
         List<String> newKeep = new ArrayList<>();
 
         OperatingSystemUtils.OperatingSystemType os = OperatingSystemUtils.getOperatingSystemType();
@@ -195,7 +231,7 @@ public final class KeepExecutionManager {
             case OperatingSystemUtils.LINUX:
             case OperatingSystemUtils.OTHER:
             default:
-                newKeep.add("sh");
+                newKeep.add(shell);
                 newKeep.add("-c");
                 newKeep.addAll(commandLines);
                 processBuilder.command(newKeep);

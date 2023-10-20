@@ -83,7 +83,7 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
             // Restore interrupted state...
             Thread.currentThread().interrupt();
         } catch (Exception ex) {
-            log.error(String.format("Failed to get active window, top most window=[%s]", topMostWindowResult == null ? "null" : topMostWindowResult), ex);
+            log.debug(String.format("Failed to get active window, top most window=[%s]", topMostWindowResult == null ? "null" : topMostWindowResult), ex);
         }
         return null;
     }
@@ -110,7 +110,7 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
     public boolean focusOnActiveWindow(@NonNull final WindowInformation windowContext) {
         try {
             log.debug("Switching to next window");
-            Application.getContext().getKeepExecutionManager().executeCommand("osascript -e 'tell application \"System Events\" to key code 118 using control down'");
+            Application.getContext().getKeepExecutionManager().executeCommandWithDefaultPath("osascript -e 'tell application \"System Events\" to key code 118 using control down'");
             // validating that the window is the desired one
             return Application.getContext().getModelActiveWindow().getActiveWindow().equals(windowContext);
         } catch (InterruptedException e) {
@@ -133,7 +133,7 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
      */
     public String runAppleScriptFile(String filename, String... params) {
         try {
-            String filePath = FileSystemUtils.getHomeDirectory().concat("/").concat(filename);
+            String filePath = FileSystemUtils.getKeepasteDirectory().concat("/").concat(filename);
             File scriptFile = new File(filePath);
             if (!scriptFile.exists()) {
                 try (InputStream inputStream = KeepsManager.class.getResourceAsStream("/scripts/mac/".concat(filename))) {
@@ -153,7 +153,7 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
                 command = command.concat(" \"").concat(param).concat("\"");
             }
 
-            List<String> output = Application.getContext().getKeepExecutionManager().executeCommand(command);
+            List<String> output = Application.getContext().getKeepExecutionManager().executeCommandWithDefaultPath(command);
             if (!output.isEmpty()) {
                 return output.get(0);
             }
@@ -169,7 +169,7 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
      * Will delete the used applescript files from the .keepaste folder in order to keep those refreshed, if any changes were done to them between versions.
      */
     private void delAppleScriptFilesForRefresh() {
-        FileSystemUtils.deleteFile(FileSystemUtils.getHomeDirectory().concat("/").concat(GET_TOP_MOST_WINDOW_APPLESCRIPT_FILENAME));
+        FileSystemUtils.deleteFile(FileSystemUtils.getKeepasteDirectory().concat("/").concat(GET_TOP_MOST_WINDOW_APPLESCRIPT_FILENAME));
     }
 
     /**

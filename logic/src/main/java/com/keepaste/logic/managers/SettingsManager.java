@@ -34,9 +34,17 @@ import java.io.IOException;
  */
 @Log4j2
 public abstract class SettingsManager {
+    private static final SettingsToFile DEFAULT_MODEL_SETTINGS = SettingsToFile.builder()
+            .copyToClipboard(true)
+            .focusOnWindowAndPaste(true)
+            .pressEnterAfterPaste(true)
+            .themeClassName("FlatMacDarkLaf")
+            .alwaysOnTop(true)
+            .path("/usr/local/bin:/usr/bin:/bin")
+            .build();
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final File SETTINGS_FILE = new File(FileSystemUtils.getHomeDirectory().concat("/settings.json"));
+    private static final File SETTINGS_FILE = new File(FileSystemUtils.getKeepasteDirectory().concat("/settings.json"));
 
     /**
      * Will load settings from file.
@@ -65,12 +73,13 @@ public abstract class SettingsManager {
         try {
 
             SettingsToFile settingsToFile = SettingsToFile.builder()
-                            .themeClassName(settings.getTheme().getClass().getName())
-                            .pressEnterAfterPaste(settings.isPressEnterAfterPaste())
-                            .focusOnWindowAndPaste(settings.isFocusOnWindowAndPaste())
-                            .copyToClipboard(settings.isCopyToClipboard())
-                            .alwaysOnTop(settings.isAlwaysOnTop())
-                            .build();
+                    .themeClassName(settings.getTheme().getClass().getName())
+                    .pressEnterAfterPaste(settings.isPressEnterAfterPaste())
+                    .focusOnWindowAndPaste(settings.isFocusOnWindowAndPaste())
+                    .copyToClipboard(settings.isCopyToClipboard())
+                    .alwaysOnTop(settings.isAlwaysOnTop())
+                    .path(settings.getPath())
+                    .build();
 
             MAPPER.writeValue(SETTINGS_FILE, settingsToFile);
         } catch (IOException e) {
@@ -112,6 +121,7 @@ public abstract class SettingsManager {
                 .pressEnterAfterPaste(settingsToFile.isPressEnterAfterPaste())
                 .theme(lookAndFeel)
                 .alwaysOnTop(settingsToFile.isAlwaysOnTop())
+                .path(settingsToFile.getPath())
                 .build();
     }
 
@@ -139,12 +149,6 @@ public abstract class SettingsManager {
     }
 
     private static SettingsToFile getDefaultSettings() {
-        return SettingsToFile.builder()
-                        .copyToClipboard(true)
-                        .focusOnWindowAndPaste(true)
-                        .pressEnterAfterPaste(true)
-                        .themeClassName("FlatMacDarkLaf")
-                        .alwaysOnTop(true)
-                        .build();
+        return DEFAULT_MODEL_SETTINGS;
     }
 }

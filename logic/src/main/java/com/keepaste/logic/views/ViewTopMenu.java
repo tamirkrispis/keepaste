@@ -27,6 +27,7 @@ import com.keepaste.logic.actionlisteners.topmenu.ExitActionListener;
 import com.keepaste.logic.actionlisteners.topmenu.AutoEnterActionListener;
 import com.keepaste.logic.actionlisteners.topmenu.FocusOnTargetWindowActionListener;
 import com.keepaste.logic.actionlisteners.topmenu.CopyToClipboardActionListener;
+import com.keepaste.logic.actionlisteners.topmenu.PathMenuItemActionListener;
 import com.keepaste.logic.actionlisteners.topmenu.ThemesMenuItemActionListener;
 import com.keepaste.logic.utils.OperatingSystemUtils;
 import lombok.Getter;
@@ -108,6 +109,11 @@ public class ViewTopMenu {
         themesMenuItem.add(darkModeRadioMenuItem);
         themesMenuItem.add(lightModeRadioMenuItem);
         settingsMenu.add(themesMenuItem);
+
+        JMenuItem pathMenuItem = new JMenuItem("$PATH");
+        PathMenuItemActionListener pathMenuItemActionListener = new PathMenuItemActionListener();
+        pathMenuItem.addActionListener(pathMenuItemActionListener);
+        settingsMenu.add(pathMenuItem);
 
         menuItemMain.add(settingsMenu);
         menuItemMain.add(new JSeparator());
