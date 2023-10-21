@@ -36,7 +36,7 @@ public class DialogHeart extends javax.swing.JDialog {
         jTextArea1.setColumns(20);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Dear Valued User,\n\nThank you for showing your appreciation by clicking on the \"like\" icon! We truly appreciate your support and would like to invite you to join us in furthering the success of our open-source desktop application. Here are a few ways you can contribute:\n\nSpread the Word: Help us reach a wider audience by sharing our project on social media platforms, developer communities, or relevant forums. Every mention counts and can make a significant impact!\n\nContribute Code: If you have programming skills, consider contributing to our project's development. You can find our source code repository on GitHub. Feel free to submit bug fixes, new features, or enhancements. Your contributions will be highly valued and credited.\n\nFinancial Support: Maintaining and improving our project requires resources. If you are in a position to provide financial support, consider making a donation or becoming a sponsor. Your contributions will help cover hosting costs, development tools, and other project expenses.\n\nProvide Feedback: Your feedback is invaluable to us. Share your thoughts, suggestions, or any issues you encounter while using our application. Your feedback helps us improve the user experience and address any shortcomings.\n\nWe truly believe in the power of open-source collaboration, and with your support, we can continue to enhance our application, add exciting new features, and make it even more beneficial for our user community.\n\nThank you again for your support. Together, we can shape the future of our open-source project!");
+        jTextArea1.setText("Dear Keepaster,\n\nThank you for showing your appreciation by clicking on the \"Love\" icon! We truly appreciate your support and would like to invite you to join us in furthering the success of our open-source desktop application. Here are a few ways you can contribute:\n\nSpread the Word: Help Keepaste reach a wider audience by sharing our project on social media platforms, developer communities, or relevant forums. Every mention counts and can make a significant impact!\n\nContribute Code: If you have programming skills, consider contributing to Keepaste project's development. You can find the source code repository on GitHub. Feel free to submit bug fixes, new features, or enhancements. Your contributions will be highly valued and credited.\n\nProvide Feedback: Your feedback is invaluable. Share your thoughts, suggestions, or any issues you encounter while using Keepaste.\n\nYou can also support Keepaste on buymeacoffee.com\n\nFor more about Keepaste visit keepaste.com\n\nThans again for your support!");
         jTextArea1.setWrapStyleWord(true);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -51,9 +51,9 @@ public class DialogHeart extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

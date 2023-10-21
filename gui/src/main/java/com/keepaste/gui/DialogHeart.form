@@ -32,9 +32,9 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="543" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="435" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -54,7 +54,7 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Dear Valued User,&#xa;&#xa;Thank you for showing your appreciation by clicking on the &quot;like&quot; icon! We truly appreciate your support and would like to invite you to join us in furthering the success of our open-source desktop application. Here are a few ways you can contribute:&#xa;&#xa;Spread the Word: Help us reach a wider audience by sharing our project on social media platforms, developer communities, or relevant forums. Every mention counts and can make a significant impact!&#xa;&#xa;Contribute Code: If you have programming skills, consider contributing to our project&apos;s development. You can find our source code repository on GitHub. Feel free to submit bug fixes, new features, or enhancements. Your contributions will be highly valued and credited.&#xa;&#xa;Financial Support: Maintaining and improving our project requires resources. If you are in a position to provide financial support, consider making a donation or becoming a sponsor. Your contributions will help cover hosting costs, development tools, and other project expenses.&#xa;&#xa;Provide Feedback: Your feedback is invaluable to us. Share your thoughts, suggestions, or any issues you encounter while using our application. Your feedback helps us improve the user experience and address any shortcomings.&#xa;&#xa;We truly believe in the power of open-source collaboration, and with your support, we can continue to enhance our application, add exciting new features, and make it even more beneficial for our user community.&#xa;&#xa;Thank you again for your support. Together, we can shape the future of our open-source project!"/>
+            <Property name="text" type="java.lang.String" value="Dear Keepaster,&#xa;&#xa;Thank you for showing your appreciation by clicking on the &quot;Love&quot; icon! We truly appreciate your support and would like to invite you to join us in furthering the success of our open-source desktop application. Here are a few ways you can contribute:&#xa;&#xa;Spread the Word: Help Keepaste reach a wider audience by sharing our project on social media platforms, developer communities, or relevant forums. Every mention counts and can make a significant impact!&#xa;&#xa;Contribute Code: If you have programming skills, consider contributing to Keepaste project&apos;s development. You can find the source code repository on GitHub. Feel free to submit bug fixes, new features, or enhancements. Your contributions will be highly valued and credited.&#xa;&#xa;Provide Feedback: Your feedback is invaluable. Share your thoughts, suggestions, or any issues you encounter while using Keepaste.&#xa;&#xa;You can also support Keepaste on buymeacoffee.com&#xa;&#xa;For more about Keepaste visit keepaste.com&#xa;&#xa;Thans again for your support!"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>

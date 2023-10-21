@@ -148,6 +148,8 @@ For anything else, feel free to drop me an email at [tamirkrispis@gmail.com](mai
 
 If you like Keepaste, or better off, don't, it would be very helpful to let me know about it and how I can make things better in the future.
 
+Fuel this open-source project with a [cup of coffee!](https://www.buymeacoffee.com/keepaste) ☕ to show your support and keep Keepaste moving forward.
+
 <b>Important note:</b> The icons used for the application are licensed and provided by <a href="https://icons8.com/">Icons8</a>, hence extraction and re-use of icons is prohibited.
 
 

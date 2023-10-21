@@ -89,7 +89,7 @@
           <Font name="Helvetica Neue" size="12" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;a href=&quot;www.keepaste.com/tutorial.htm&quot;&gt;Tutorial &amp; Demo video&lt;/a&gt;&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;a href=&quot;www.keepaste.com/tutorial.htm&quot;&gt;Quick Tutorial&lt;/a&gt;&lt;/html&gt;"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -146,7 +146,7 @@
           <Font name="Helvetica Neue" size="12" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;To get things started please make sure your visiting&lt;br/&gt;the online tutorial and demo video at -&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;To get things started please make sure your visiting&lt;br/&gt;the online tutorial at -&lt;/html&gt;"/>
       </Properties>
     </Component>
   </SubComponents>
