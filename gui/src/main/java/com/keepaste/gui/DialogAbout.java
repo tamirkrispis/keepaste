@@ -37,6 +37,7 @@ public class DialogAbout extends javax.swing.JDialog {
         labelIcons8 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         labelKeepsLibrary = new javax.swing.JLabel();
+        labalBuyMeACoffee = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -81,6 +82,10 @@ public class DialogAbout extends javax.swing.JDialog {
         labelKeepsLibrary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelKeepsLibrary.setText("<html><a href=\"https://github.com/tamirkrispis/keeps-library\">Keeps-library</a></html>");
 
+        labalBuyMeACoffee.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        labalBuyMeACoffee.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labalBuyMeACoffee.setText("<html><a href=\"https://github.com/tamirkrispis/keepaste\">Buy me a coffee!</a></html>");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,7 +102,8 @@ public class DialogAbout extends javax.swing.JDialog {
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addComponent(labelIcons8, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                    .addComponent(labelKeepsLibrary))
+                    .addComponent(labelKeepsLibrary)
+                    .addComponent(labalBuyMeACoffee))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,9 +121,11 @@ public class DialogAbout extends javax.swing.JDialog {
                 .addComponent(labelWebsite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelGithub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelKeepsLibrary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labalBuyMeACoffee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(labelIcons8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
@@ -175,6 +183,7 @@ public class DialogAbout extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel labalBuyMeACoffee;
     public javax.swing.JLabel labelGithub;
     public javax.swing.JLabel labelIcons8;
     public javax.swing.JLabel labelKeepsLibrary;

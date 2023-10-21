@@ -49,7 +49,7 @@ public class DialogWelcome extends javax.swing.JDialog {
 
         labelTutorial.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         labelTutorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTutorial.setText("<html><a href=\"www.keepaste.com/tutorial.htm\">Tutorial & Demo video</a></html>");
+        labelTutorial.setText("<html><a href=\"www.keepaste.com/tutorial.htm\">Quick Tutorial</a></html>");
 
         labelVersion.setFont(new java.awt.Font("Helvetica Neue", 1, 12)); // NOI18N
         labelVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -69,7 +69,7 @@ public class DialogWelcome extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("<html>To get things started please make sure your visiting<br/>the online tutorial and demo video at -</html>");
+        jLabel4.setText("<html>To get things started please make sure your visiting<br/>the online tutorial at -</html>");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

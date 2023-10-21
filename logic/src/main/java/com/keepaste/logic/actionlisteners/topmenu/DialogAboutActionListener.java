@@ -61,6 +61,7 @@ public class DialogAboutActionListener implements MouseListener {
         GuiUtils.initHyperlinkLabel(dialogAbout.labelGithub, "https://github.com/tamirkrispis/keepaste");
         GuiUtils.initHyperlinkLabel(dialogAbout.labelIcons8, "https://icons8.com/");
         GuiUtils.initHyperlinkLabel(dialogAbout.labelKeepsLibrary, "https://github.com/tamirkrispis/keeps-library");
+        GuiUtils.initHyperlinkLabel(dialogAbout.labalBuyMeACoffee, "https://www.buymeacoffee.com/keepaste");
         dialogAbout.labelVersion.setText(String.format("Version %s", Application.getContext().getVersion()));
     }
 }
