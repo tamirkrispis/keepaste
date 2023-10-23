@@ -59,7 +59,7 @@ public class DialogKeep extends javax.swing.JDialog {
 
         labelKeep.setText("Keep*:");
 
-        textName.setFocusCycleRoot(true);
+        textName.setToolTipText("");
 
         buttonAddParam.setText("+");
         buttonAddParam.setToolTipText("");
@@ -85,6 +85,7 @@ public class DialogKeep extends javax.swing.JDialog {
             }
         ));
         tableParams.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tableParams.setFocusable(false);
         scrollPaneTable.setViewportView(tableParams);
 
         buttonExistingParam.setText("Existing");
