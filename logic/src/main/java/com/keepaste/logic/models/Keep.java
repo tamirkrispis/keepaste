@@ -61,7 +61,7 @@ public class Keep extends KeepNode {
 
     @Override
     public String toString() {
-        return title;
+        return getTitle();
     }
 
     /**
@@ -71,11 +71,11 @@ public class Keep extends KeepNode {
      */
     public String toStringAll() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Title: [%s]", title));
-        sb.append(String.format( ", Phrase: [%s]", phrase));
+        sb.append(String.format("Title: [%s]", getTitle()));
+        sb.append(String.format(", Phrase: [%s]", getPhrase()));
         sb.append(", Parameters: {");
-        if (parameters != null) {
-            for (KeepParameter parameter : parameters) {
+        if (getParameters() != null) {
+            for (KeepParameter parameter : getParameters()) {
                 sb.append(parameter);
             }
         }
@@ -104,8 +104,9 @@ public class Keep extends KeepNode {
                 if (parameter.isGlobal()) {
                     color = "#58a6ff";
                 }
-                if (KeepExecutionManager.getGlobalParameterValuesMap().containsKey(parameter.getName())) {
-                    currentValue = ", <b>\"".concat(KeepExecutionManager.getGlobalParameterValuesMap().get(parameter.getName())).concat("\"</b>");
+                if (KeepExecutionManager.getGLOBAL_PARAMETER_VALUES_MAP().containsKey(parameter.getName())) {
+                    currentValue = ", <b>\"".concat(
+                            KeepExecutionManager.getGLOBAL_PARAMETER_VALUES_MAP().get(parameter.getName())).concat("\"</b>");
                 }
                 String type;
                 if (StringUtils.isEmpty(parameter.getPhrase())) {
@@ -116,7 +117,8 @@ public class Keep extends KeepNode {
                     type = "command";
                 }
                 String command = !StringUtils.isEmpty(parameter.getPhrase()) ? "\"".concat(parameter.getPhrase()).concat("\"") : "";
-                sb.append(String.format("<b style=\"color: %s\">%s</b> (%s%s)<blockquote><i>%s</i></blockquote>", color, parameter.getName(), type, currentValue, StringEscapeUtils.escapeHtml4(command)));
+                sb.append(String.format("<b style=\"color: %s\">%s</b> (%s%s)<blockquote><i>%s</i></blockquote>",
+                        color, parameter.getName(), type, currentValue, StringEscapeUtils.escapeHtml4(command)));
                 sb.append("<br>");
             }
         }

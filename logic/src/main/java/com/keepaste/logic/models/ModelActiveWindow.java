@@ -31,14 +31,19 @@ public class ModelActiveWindow extends BaseModel {
 
     // the current intercepted window by the window interceptor.
     @Getter
-    WindowInformation interceptedWindow = null;
+    private WindowInformation interceptedWindow = null;
     // the set active window to work with when executing a Keep.
     @Getter
-    WindowInformation activeWindow = null;
+    private WindowInformation activeWindow = null;
     // the locked on window if this option is choosed.
     @Getter
-    WindowInformation lockedOnWindow = null;
+    private WindowInformation lockedOnWindow = null;
 
+    /**
+     * Sets the intercepted window.
+     *
+     * @param window the {@link WindowInformation} for the window
+     */
     public void setInterceptedWindow(WindowInformation window) {
         if (window != interceptedWindow) {
             this.interceptedWindow = window;
@@ -46,19 +51,33 @@ public class ModelActiveWindow extends BaseModel {
         }
     }
 
+    /**
+     * Sets the active window.
+     *
+     * @param window the {@link WindowInformation} for the window
+     */
     public void setActiveWindow(WindowInformation window) {
         log.debug("Active window set to [{}]", window);
         this.activeWindow = window;
     }
 
+    /**
+     * Lock on currently set active window.
+     */
     public void lockOnActiveWindow() {
         lockedOnWindow = getActiveWindow();
     }
 
+    /**
+     * Unlock on currently set active window.
+     */
     public void unLockFromWindow() {
         lockedOnWindow = null;
     }
 
+    /**
+     * Is the lock on active window is currently active.
+     */
     public boolean isLockedOnWindow() {
         return lockedOnWindow != null;
     }

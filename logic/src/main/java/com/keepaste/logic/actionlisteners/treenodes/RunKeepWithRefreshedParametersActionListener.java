@@ -21,6 +21,7 @@ package com.keepaste.logic.actionlisteners.treenodes;
 import com.keepaste.logic.Application;
 import com.keepaste.logic.models.Keep;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,7 @@ import java.awt.event.ActionEvent;
 @Log4j2
 public class RunKeepWithRefreshedParametersActionListener extends BaseTreeNodeActionListener {
 
-    public RunKeepWithRefreshedParametersActionListener(ViewTree viewTree) {
+    public RunKeepWithRefreshedParametersActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 

@@ -21,6 +21,7 @@ package com.keepaste.logic.actionlisteners.treenodes;
 import com.keepaste.logic.Application;
 import com.keepaste.logic.models.KeepNode;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +35,12 @@ import java.io.FileWriter;
 @Log4j2
 public class ExportKeepsActionListener extends BaseTreeNodeActionListener {
 
-    public ExportKeepsActionListener(ViewTree viewTree) {
+    /**
+     * Constructor.
+     *
+     * @param viewTree {@link ViewTree}
+     */
+    public ExportKeepsActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 
@@ -59,7 +65,8 @@ public class ExportKeepsActionListener extends BaseTreeNodeActionListener {
                 log.debug("Save as file: " + fileToSave.getAbsolutePath());
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(Application.getContext().getGui(), "Failed to export keeps", "Export keeps", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                    "Failed to export keeps", "Export keeps", JOptionPane.ERROR_MESSAGE);
             log.error("Failed to export keeps", ex);
         }
     }

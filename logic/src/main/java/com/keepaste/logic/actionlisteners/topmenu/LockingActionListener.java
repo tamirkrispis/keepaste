@@ -34,9 +34,15 @@ import java.awt.event.ActionListener;
 @Log4j2
 public class LockingActionListener implements ActionListener {
 
-    final ModelActiveWindow modelActiveWindow;
-    final ViewActiveWindow viewActiveWindow;
+    private final ModelActiveWindow modelActiveWindow;
+    private final ViewActiveWindow viewActiveWindow;
 
+    /**
+     * Constructor.
+     *
+     * @param modelActiveWindow {@link ModelActiveWindow}
+     * @param viewActiveWindow  {@link ViewActiveWindow}
+     */
     public LockingActionListener(@NonNull final ModelActiveWindow modelActiveWindow,
                                  @NonNull final ViewActiveWindow viewActiveWindow) {
         this.modelActiveWindow = modelActiveWindow;
@@ -46,7 +52,7 @@ public class LockingActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("TopMenu - Toggling locking, the locking menu item was pressed");
-        JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem)e.getSource();
+        JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) e.getSource();
         if (menuItem.isSelected()) {
             if (modelActiveWindow.getActiveWindow() != null) {
                 if (modelActiveWindow.getLockedOnWindow() == null) {
@@ -58,7 +64,8 @@ public class LockingActionListener implements ActionListener {
                 }
             } else {
                 menuItem.setSelected(false);
-                JOptionPane.showMessageDialog(Application.getContext().getGui().getContentPane(), "Please select a window first by clicking on it", "No active window", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(Application.getContext().getGui().getContentPane(),
+                        "Please select a window first by clicking on it", "No active window", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             log.debug("TopMenu - Unlocking from [{}]", modelActiveWindow.getLockedOnWindow());

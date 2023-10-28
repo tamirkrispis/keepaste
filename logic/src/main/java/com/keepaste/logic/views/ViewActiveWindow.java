@@ -30,8 +30,8 @@ import java.awt.*;
  */
 public class ViewActiveWindow implements View {
 
-    final JLabel statusLabelProcessName;
-    final JLabel statusLabelWindowTitle;
+    private final JLabel statusLabelProcessName;
+    private final JLabel statusLabelWindowTitle;
 
     /**
      * Constructor.

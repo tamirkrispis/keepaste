@@ -21,6 +21,7 @@ package com.keepaste.logic.actionlisteners.treenodes;
 import com.keepaste.logic.Application;
 import com.keepaste.logic.models.KeepsGroup;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -32,7 +33,7 @@ import java.awt.event.ActionEvent;
 @Log4j2
 public class RenameGroupTreeNodeActionListener extends BaseTreeNodeActionListener {
 
-    public RenameGroupTreeNodeActionListener(ViewTree viewTree) {
+    public RenameGroupTreeNodeActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 

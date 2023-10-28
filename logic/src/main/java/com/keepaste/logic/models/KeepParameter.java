@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -33,7 +34,13 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 public class KeepParameter {
-    public KeepParameter(final String name, final String phrase) {
+    /**
+     * Constructor.
+     *
+     * @param name      the name of the keep
+     * @param phrase    the phrase to keep
+     */
+    public KeepParameter(@NonNull final String name, @NonNull final String phrase) {
         this.name = name;
         this.phrase = phrase;
         this.isGlobal = false;

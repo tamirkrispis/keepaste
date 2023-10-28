@@ -38,7 +38,7 @@ import java.awt.event.KeyEvent;
  * This class is Windows's {@link WindowManager}, it holds relevant methods related to windows management in the Windows OS.
  */
 @Log4j2
-public final class WindowsWindowsManager extends BaseWindowManager implements WindowManager {
+public final class WindowsWindowsManager implements WindowManager {
     public static final int BUFFER_LENGTH_MEGA = 1024;
     private WindowInformation lastTopMostWindow;
 

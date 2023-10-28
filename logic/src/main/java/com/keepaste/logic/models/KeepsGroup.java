@@ -36,16 +36,34 @@ import java.util.List;
 @NoArgsConstructor
 @JsonTypeName("KeepsGroup")
 public class KeepsGroup extends KeepNode {
-    List<KeepNode> keepsNodes = new ArrayList<>();
+    private List<KeepNode> keepsNodes = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param title         the title of the group
+     */
     public KeepsGroup(final String title) {
         super(title, null);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param title         the title of the group
+     * @param icon          the icon of the group
+     */
     public KeepsGroup(final String title, final Icon icon) {
         super(title, icon);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param title         the title of the group
+     * @param icon          the icon of the group
+     * @param keepsNodes    the child keeps nodes
+     */
     public KeepsGroup(final String title, final Icon icon, final List<KeepNode> keepsNodes) {
         super(title, icon);
         this.keepsNodes = keepsNodes;
@@ -53,6 +71,6 @@ public class KeepsGroup extends KeepNode {
 
     @Override
     public String toString() {
-        return title;
+        return getTitle();
     }
 }

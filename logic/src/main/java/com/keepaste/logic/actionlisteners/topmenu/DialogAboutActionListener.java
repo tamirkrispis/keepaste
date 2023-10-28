@@ -27,7 +27,7 @@ import java.awt.event.MouseListener;
  * This class is an ActionListener for menu item - show about.
  */
 public class DialogAboutActionListener implements MouseListener {
-    DialogAbout dialogAbout;
+    private DialogAbout dialogAbout;
 
     @Override
     public void mouseClicked(MouseEvent e) {

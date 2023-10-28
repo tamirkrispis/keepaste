@@ -30,7 +30,7 @@ public class TransferableNode implements Transferable {
     public static final DataFlavor EXPANDED_STATE_FLAVOR = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType, "Vector");
     private final DefaultMutableTreeNode node;
     private final List<Boolean> expandedStates;
-    private final DataFlavor[] flavors = { NODE_FLAVOR, EXPANDED_STATE_FLAVOR };
+    private final DataFlavor[] flavors = {NODE_FLAVOR, EXPANDED_STATE_FLAVOR};
     public TransferableNode(final DefaultMutableTreeNode nd, final List<Boolean> es) {
         node = nd;
         expandedStates = es;

@@ -23,15 +23,12 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * This class is a utility class for anything related to the file system.
  */
 @Log4j2
-public class FileSystemUtils {
+public final class FileSystemUtils {
 
     private static final String HOME_DIRECTORY = System.getProperty("user.home");
 
@@ -39,55 +36,27 @@ public class FileSystemUtils {
         // private constructor for utils class
     }
 
-    public static List<File> getFilesByFolder(String path, String extension){
-        List<File> files = new ArrayList<>();
-
-        //Getting all sub folders from the applications folder
-        File file = new File(path);
-        String[] names = file.list();
-
-        if (extension == null)
-        {
-            extension = "";
-        }
-
-        if (names != null) {
-            for (String name : names) {
-                if (name.toLowerCase().endsWith(extension.toLowerCase())) {
-                    if (!name.startsWith(".")) {
-                        if (!path.endsWith("/")) {
-                            path = path.concat("/");
-                        }
-                        File afile = new File(path + name);
-                        files.add(afile);
-                    }
-                }
-            }
-        }
-        Collections.sort(files);
-        return files;
-    }
-
-    public static boolean createDirectoryIfNotExists(String path){
+    /**
+     * Creates a directory if not exists already.
+     *
+     * @param path the path of the directory to be created
+     */
+    public static void createDirectoryIfNotExists(String path) {
         File theDir = new File(path);
 
         // if the directory does not exist, create it
         if (!theDir.exists()) {
             log.debug("Creating directory: ".concat(path));
-            boolean result = false;
 
-            try{
-                result = theDir.mkdir();
-            } catch(SecurityException se){
+            try {
+                if (theDir.mkdir()) {
+                    log.debug("Directory created: ".concat(path));
+                }
+            } catch (SecurityException se) {
                 //handle it
                 JOptionPane.showMessageDialog(null, "Infrastructure FileSystem failed: " + se);
             }
-            if (result) {
-                log.debug("Directory created: ".concat(path));
-            }
-            return result;
         }
-        return false;
     }
 
     public static String getKeepasteDirectory() {

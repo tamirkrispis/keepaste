@@ -35,7 +35,7 @@ public class DefaultTreeTransferHandler extends BaseTreeTransferHandler {
     private final transient ViewTree viewTree;
 
     public DefaultTreeTransferHandler(final ViewTree viewTree, final int action) {
-        super(viewTree.tree, action, true);
+        super(viewTree.getTree(), action, true);
         this.viewTree = viewTree;
     }
 

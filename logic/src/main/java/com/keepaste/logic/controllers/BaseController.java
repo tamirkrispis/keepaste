@@ -20,8 +20,8 @@ package com.keepaste.logic.controllers;
 
 import com.keepaste.logic.common.BaseSubject;
 import com.keepaste.logic.common.Observer;
-import com.keepaste.logic.models.Model;
 import com.keepaste.logic.views.View;
+import org.apache.maven.model.Model;
 
 /**
  * This class is a base controller (MVC), all controllers are both subjects and observers as they observe changes in {@link Model}

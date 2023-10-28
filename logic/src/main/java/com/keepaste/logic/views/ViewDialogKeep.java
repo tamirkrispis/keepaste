@@ -37,7 +37,7 @@ import java.util.List;
  * This View class manages the {@link DialogKeep}.
  */
 public class ViewDialogKeep {
-    final DialogKeep dialogKeep = new DialogKeep(Application.getContext().getGui(), true);
+    private final DialogKeep dialogKeep = new DialogKeep(Application.getContext().getGui(), true);
     private final List<KeepParameter> editedParameters;
 
     /**

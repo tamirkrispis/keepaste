@@ -22,6 +22,7 @@ import com.keepaste.logic.Application;
 import com.keepaste.logic.models.KeepsGroup;
 import com.keepaste.logic.models.KeepNode;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +33,12 @@ import java.awt.event.ActionEvent;
 @Log4j2
 public class AddGroupTreeNodeActionListener extends BaseTreeNodeActionListener {
 
-    public AddGroupTreeNodeActionListener(ViewTree viewTree) {
+    /**
+     * Constructor.
+     *
+     * @param viewTree the Keeps tree
+     */
+    public AddGroupTreeNodeActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 

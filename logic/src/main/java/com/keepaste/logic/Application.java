@@ -59,6 +59,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public final class Application {
 
+    public static final int APP_MIN_WIDTH = 320;
+    public static final int LOCATION_MARGIN = 50;
     @Getter
     private static Context context;
 
@@ -89,10 +91,16 @@ public final class Application {
             final Gui gui = new Gui();
 
             if (OperatingSystemUtils.getOperatingSystemType() == OperatingSystemUtils.OperatingSystemType.WINDOWS) {
-                gui.setMinimumSize(new Dimension(320, gui.getHeight()));
+                gui.setMinimumSize(new Dimension(APP_MIN_WIDTH, gui.getHeight()));
             }
             ModelActiveWindow modelActiveWindow = new ModelActiveWindow();
-            context = new Context(gui, getWindowManager(), modelSettings, new KeepsManager(), new KeepExecutionManager(), modelActiveWindow);
+            context = new Context(
+                    gui,
+                    getWindowManager(),
+                    modelSettings,
+                    new KeepsManager(),
+                    new KeepExecutionManager(),
+                    modelActiveWindow);
             boolean isFirstTimeRunning = !new File(context.getKeepsManager().getKeepsFilePathString()).exists();
             checkForNewRelease();
             Image logoImage = ImagesUtils.getImage("/logo-white.png");
@@ -130,7 +138,9 @@ public final class Application {
                     // having those reversed will cause ctrl+f4 which is being used to switch between windows to stop working
                     // on always on top mode.
                     gui.setLocationRelativeTo(null);
-                    gui.setLocation((int) screenSize.getWidth() - gui.getWidth() - 50, (int) screenSize.getHeight() - gui.getHeight() - 50);
+                    gui.setLocation(
+                            (int) screenSize.getWidth() - gui.getWidth() - LOCATION_MARGIN,
+                            (int) screenSize.getHeight() - gui.getHeight() - LOCATION_MARGIN);
 
                     gui.setAlwaysOnTop(finalModelSettings.isAlwaysOnTop());
 
@@ -162,14 +172,14 @@ public final class Application {
             FlatLightLaf.setup();
             UIManager.setLookAndFeel(modelSettings.getTheme());
             UIManager.put("Component.focusWidth", 0);
-            UIManager.put("TitlePane.iconSize", new Dimension(20,20));
+            UIManager.put("TitlePane.iconSize", new Dimension(20, 20));
             UIManager.put("MenuItem.minimumIconSize", 20);
-            UIManager.put( "Button.arc", 999 );
-            UIManager.put( "Component.arc", 999 );
-            UIManager.put( "ProgressBar.arc", 999 );
-            UIManager.put( "TextComponent.arc", 999 );
-            UIManager.put("Menu.iconSize", new Dimension(20,20));
-            UIManager.put( "MenuBar.itemMargins", new Insets(0,2,0,2) );
+            UIManager.put("Button.arc", 999);
+            UIManager.put("Component.arc", 999);
+            UIManager.put("ProgressBar.arc", 999);
+            UIManager.put("TextComponent.arc", 999);
+            UIManager.put("Menu.iconSize", new Dimension(20, 20));
+            UIManager.put("MenuBar.itemMargins", new Insets(0, 2, 0, 2));
 
         } catch (Exception ex) {
             log.error("Failed to init ui look and feel", ex);
@@ -195,7 +205,10 @@ public final class Application {
                 String currentVersion = Application.getContext().getVersion();
                 String latestVersion = getLatestVersion();
                 if (!currentVersion.equals(latestVersion)) {
-                    var dialogResult = JOptionPane.showConfirmDialog(getContext().getGui(), String.format("You're using version [%s] while there is a newer version [%s], would you like to go to https://www.keepaste.com to download it now?", currentVersion, latestVersion), "New keepaste version is available", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    var dialogResult = JOptionPane.showConfirmDialog(getContext().getGui(),
+                            String.format("You're using version [%s] while there is a newer version [%s], would you like "
+                                    + "to go to https://www.keepaste.com to download it now?", currentVersion, latestVersion),
+                            "New keepaste version is available", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         WebUtils.browseTo("https://www.keepaste.com/#download");
                     }

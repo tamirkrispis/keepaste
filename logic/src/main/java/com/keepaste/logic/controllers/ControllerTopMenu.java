@@ -32,6 +32,13 @@ import javax.swing.*;
  */
 public class ControllerTopMenu extends BaseSubject implements Observer {
 
+    /**
+     * Constructor.
+     *
+     * @param modelActiveWindow {@link ModelActiveWindow}
+     * @param viewActiveWindow  {@link ViewActiveWindow}
+     * @param lockingMenuItem   the locking {@link JMenuItem}
+     */
     public ControllerTopMenu(@NonNull final ModelActiveWindow modelActiveWindow,
                              @NonNull final ViewActiveWindow viewActiveWindow,
                              final JMenuItem lockingMenuItem) {
