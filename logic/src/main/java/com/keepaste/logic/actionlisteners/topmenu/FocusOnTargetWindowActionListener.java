@@ -19,6 +19,7 @@ package com.keepaste.logic.actionlisteners.topmenu;
 
 import com.keepaste.logic.Application;
 import com.keepaste.logic.common.Constants;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -30,11 +31,17 @@ import java.awt.event.ActionListener;
  */
 @Log4j2
 public class FocusOnTargetWindowActionListener  implements ActionListener {
-    final JCheckBoxMenuItem copyToClipboardCheckboxMenuItem;
-    final JCheckBoxMenuItem autoEnterCheckboxMenuItem;
+    private final JCheckBoxMenuItem copyToClipboardCheckboxMenuItem;
+    private final JCheckBoxMenuItem autoEnterCheckboxMenuItem;
 
-    public FocusOnTargetWindowActionListener(JCheckBoxMenuItem copyToClipboardCheckboxMenuItem,
-                                             JCheckBoxMenuItem autoEnterCheckboxMenuItem) {
+    /**
+     * Constructor.
+     *
+     * @param copyToClipboardCheckboxMenuItem   copy-to-clipboard {@link JCheckBoxMenuItem}
+     * @param autoEnterCheckboxMenuItem         auto-enter {@link JCheckBoxMenuItem}
+     */
+    public FocusOnTargetWindowActionListener(@NonNull final JCheckBoxMenuItem copyToClipboardCheckboxMenuItem,
+                                             @NonNull final JCheckBoxMenuItem autoEnterCheckboxMenuItem) {
         this.copyToClipboardCheckboxMenuItem = copyToClipboardCheckboxMenuItem;
         this.autoEnterCheckboxMenuItem = autoEnterCheckboxMenuItem;
     }

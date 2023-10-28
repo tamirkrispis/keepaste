@@ -38,8 +38,19 @@ import java.util.Random;
  */
 @Log4j2
 public final class ImagesUtils {
-    static final Random random = new Random();
+    static final Random RANDOM = new Random();
     private static final String KEEPASTE = "keepaste";
+    public static final int DEFAULT_COLOR_VAL = 128;
+    public static final int DEFAULT_ICON_WIDTH = 15;
+    public static final int COLOR_PART_BOUND = 256;
+    public static final int COLOR_PART_LIGHTER_VAL = 50;
+    public static final int KEEP_ICON_FONT_SIZE = 12;
+    public static final Color AWS_COLOR = new Color(243, 140, 0);
+    public static final Color MVN_COLOR = new Color(194, 3, 59);
+    public static final Color TERRAFORM_COLOR = new Color(94, 55, 214);
+    public static final Color GIT_COLOR = new Color(225, 74, 50);
+    public static final Color KUBECTL_COLOR = new Color(45, 104, 216);
+    public static final Color DOCKER_COLOR = new Color(33, 140, 223);
 
     private ImagesUtils() { }
 
@@ -64,7 +75,7 @@ public final class ImagesUtils {
      * @return the default icon to be used for a Keep on the tree.
      */
     public static ImageIcon getDefaultKeepNodeIcon() {
-        return getImageIcon(KEEPASTE, new Color(128, 128, 128));
+        return getImageIcon(KEEPASTE, new Color(DEFAULT_COLOR_VAL, DEFAULT_COLOR_VAL, DEFAULT_COLOR_VAL));
     }
 
     /**
@@ -111,9 +122,15 @@ public final class ImagesUtils {
         return new ImageIcon(file.getAbsolutePath());
     }
 
+    /**
+     * Generates a Keep's icon.
+     *
+     * @param commandExecutable The executable to create icon for
+     * @param color             the color of the icon
+     */
     public static void generateIcon(@NonNull final String commandExecutable, Color color) {
-        int width = 15;
-        int height = 15;
+        int width = DEFAULT_ICON_WIDTH;
+        int height = DEFAULT_ICON_WIDTH;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
@@ -127,7 +144,7 @@ public final class ImagesUtils {
 
         if (color == null) {
             // Generate random color
-            color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            color = new Color(RANDOM.nextInt(COLOR_PART_BOUND), RANDOM.nextInt(COLOR_PART_BOUND), RANDOM.nextInt(COLOR_PART_BOUND));
         }
 
         Color letterColor = Color.WHITE;
@@ -136,9 +153,9 @@ public final class ImagesUtils {
         }
 
         // Calculate a lighter color based on the random color
-        Color lighterColor = new Color(color.getRed() > 50 ? color.getRed() - 50 : color.getRed(),
-                color.getGreen() > 50 ? color.getGreen() - 50 :  color.getGreen(),
-                color.getBlue() > 50 ? color.getBlue() - 50 : color.getBlue());
+        Color lighterColor = new Color(color.getRed() > COLOR_PART_LIGHTER_VAL ? color.getRed() - COLOR_PART_LIGHTER_VAL : color.getRed(),
+                color.getGreen() > COLOR_PART_LIGHTER_VAL ? color.getGreen() - COLOR_PART_LIGHTER_VAL :  color.getGreen(),
+                color.getBlue() > COLOR_PART_LIGHTER_VAL ? color.getBlue() - COLOR_PART_LIGHTER_VAL : color.getBlue());
 
         // Create gradient paint for the circle
         GradientPaint gradientPaint = new GradientPaint(0, 0, lighterColor, width, height, color, true);
@@ -151,7 +168,7 @@ public final class ImagesUtils {
         String letter = commandExecutable.substring(0, 1).toLowerCase();
 
         // Set font properties
-        Font font = new Font("Arial", Font.PLAIN, 12);
+        Font font = new Font("Arial", Font.PLAIN, KEEP_ICON_FONT_SIZE);
         g2d.setFont(font);
         g2d.setColor(letterColor);
 
@@ -182,12 +199,12 @@ public final class ImagesUtils {
 
     private static Color getCommandColor(String command) {
         Map<String, Color> knownCommandsColors = new HashMap<>();
-        knownCommandsColors.put("aws", new Color(243, 140, 0));
-        knownCommandsColors.put("mvn", new Color(194, 3, 59));
-        knownCommandsColors.put("terraform", new Color(94, 55, 214));
-        knownCommandsColors.put("git", new Color(225, 74, 50));
-        knownCommandsColors.put("kubectl", new Color(45, 104, 216));
-        knownCommandsColors.put("docker", new Color(33, 140, 223));
+        knownCommandsColors.put("aws", AWS_COLOR);
+        knownCommandsColors.put("mvn", MVN_COLOR);
+        knownCommandsColors.put("terraform", TERRAFORM_COLOR);
+        knownCommandsColors.put("git", GIT_COLOR);
+        knownCommandsColors.put("kubectl", KUBECTL_COLOR);
+        knownCommandsColors.put("docker", DOCKER_COLOR);
         return knownCommandsColors.get(command.toLowerCase());
     }
 

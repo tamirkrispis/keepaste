@@ -19,6 +19,8 @@
 package com.keepaste.logic.views;
 
 import com.keepaste.logic.models.KeepParameter;
+import lombok.NonNull;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -26,10 +28,15 @@ import java.util.List;
  * This class is a model for a Keep's parameters as shown on the {@link com.keepaste.gui.DialogKeep}.
  */
 public class KeepParametersTableModel extends AbstractTableModel {
-    final String[] columns = {"Parameter name", "Parameter value", "Global"};
-    final transient List<KeepParameter> editedParameters;
+    private final String[] columns = {"Parameter name", "Parameter value", "Global"};
+    private final transient List<KeepParameter> editedParameters;
 
-    public KeepParametersTableModel(List<KeepParameter> editedParameters) {
+    /**
+     * Constructor.
+     *
+     * @param editedParameters  the list of the keep's parameters to be edited
+     */
+    public KeepParametersTableModel(@NonNull final List<KeepParameter> editedParameters) {
         this.editedParameters = editedParameters;
     }
 
@@ -122,11 +129,22 @@ public class KeepParametersTableModel extends AbstractTableModel {
         fireTableCellUpdated(row, col);
     }
 
+    /**
+     * Removes a row from the table model.
+     *
+     * @param rowIndex the row index
+     */
     public void removeRow(int rowIndex) {
         editedParameters.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
+    /**
+     * Adds a row to the table model.
+     *
+     * @param rowIndex  the row index
+     * @param values    the values to be set
+     */
     public void addRow(int rowIndex, String... values) {
         editedParameters.add(new KeepParameter(values[0], values[1]));
         fireTableRowsInserted(rowIndex, rowIndex);

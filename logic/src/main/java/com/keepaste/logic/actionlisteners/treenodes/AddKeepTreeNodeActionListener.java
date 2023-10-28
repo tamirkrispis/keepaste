@@ -21,6 +21,7 @@ package com.keepaste.logic.actionlisteners.treenodes;
 import com.keepaste.logic.models.Keep;
 import com.keepaste.logic.views.ViewDialogKeep;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,12 @@ import java.awt.event.ActionEvent;
 @Log4j2
 public class AddKeepTreeNodeActionListener extends BaseTreeNodeActionListener {
 
-    public AddKeepTreeNodeActionListener(ViewTree viewTree) {
+    /**
+     * Constructor.
+     *
+     * @param viewTree the Keeps tree
+     */
+    public AddKeepTreeNodeActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 

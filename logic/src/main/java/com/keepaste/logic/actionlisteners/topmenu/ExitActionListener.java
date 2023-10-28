@@ -29,8 +29,7 @@ import java.awt.event.ActionListener;
 @Log4j2
 public class ExitActionListener implements ActionListener {
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         log.info("TopMenu - Exiting...");
         System.exit(0);
     }

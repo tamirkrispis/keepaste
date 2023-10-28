@@ -1,18 +1,25 @@
 package com.keepaste.logic.utils;
 
+import lombok.NonNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
 
-public class GuiUtils {
+public final class GuiUtils {
 
     private GuiUtils() {
         // private utility class constructor
     }
 
-    public static void showDialogOnCenterScreen(JDialog dialog) {
+    /**
+     * Constructor.
+     *
+     * @param dialog The {@link JDialog} to show
+     */
+    public static void showDialogOnCenterScreen(@NonNull final JDialog dialog) {
         final Toolkit toolkit = java.awt.Toolkit.getDefaultToolkit();
         final Dimension screenSize = toolkit.getScreenSize();
         final int x = (screenSize.width - dialog.getWidth()) / 2;

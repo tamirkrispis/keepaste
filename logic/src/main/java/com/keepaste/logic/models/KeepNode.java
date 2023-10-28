@@ -45,6 +45,6 @@ import javax.swing.*;
         @JsonSubTypes.Type(value = Keep.class, name = "Keep") }
 )
 public abstract class KeepNode {
-    String title;
-    Icon icon;
+    private String title;
+    private Icon icon;
 }

@@ -32,6 +32,13 @@ import lombok.NonNull;
  */
 public class ControllerLookAndFeel extends BaseSubject implements Observer {
 
+
+    /**
+     * Constructor.
+     *
+     * @param modelSettings     {@link ModelSettings}
+     * @param viewLookAndFeel   {@link ViewLookAndFeel}
+     */
     public ControllerLookAndFeel(@NonNull final ModelSettings modelSettings,
                                  @NonNull final ViewLookAndFeel viewLookAndFeel) {
         // ModelSetting -> ControllerLookAndFeel -> ViewLookAndFeel

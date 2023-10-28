@@ -40,9 +40,9 @@ import javax.swing.*;
  */
 public class ViewTopMenu {
 
-    final JMenu menuItemMain;
-    final JMenu menuItemAbout;
-    final JMenu menuItemHeart;
+    private final JMenu menuItemMain;
+    private final JMenu menuItemAbout;
+    private final JMenu menuItemHeart;
 
     @Getter
     JCheckBoxMenuItem lockingMenuItem;

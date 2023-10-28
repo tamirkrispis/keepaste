@@ -21,6 +21,7 @@ package com.keepaste.logic.actionlisteners.treenodes;
 import com.keepaste.logic.Application;
 import com.keepaste.logic.models.KeepNode;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,13 @@ import java.io.File;
  */
 @Log4j2
 public class ImportKeepsActionListener extends BaseTreeNodeActionListener {
-    public ImportKeepsActionListener(ViewTree viewTree) {
+
+    /**
+     * Constructor.
+     *
+     * @param viewTree the Keep's {@link ViewTree}
+     */
+    public ImportKeepsActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 
@@ -55,7 +62,8 @@ public class ImportKeepsActionListener extends BaseTreeNodeActionListener {
                 log.debug("TreeNodes - Keep imported to the tree, keep = [{}]", newKeep);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(Application.getContext().getGui(), "Failed to import keeps", "Import keeps", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                    "Failed to import keeps", "Import keeps", JOptionPane.ERROR_MESSAGE);
             log.error("Failed to import keeps", ex);
         }
     }

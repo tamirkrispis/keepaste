@@ -35,10 +35,16 @@ import java.util.concurrent.TimeUnit;
  * This class is Mac's {@link WindowManager}, it holds relevant methods related to windows management in Mac's OS's.
  */
 @Log4j2
-public final class MacWindowsManager extends BaseWindowManager implements WindowManager {
+public final class MacWindowsManager implements WindowManager {
     public static final String GET_TOP_MOST_WINDOW_APPLESCRIPT_FILENAME = "GetTopMostWindow.applescript";
+    public static final int GET_ACTIVE_WINDOW_NUM_TRIES = 3;
+    public static final int SLEEP_INTERVAL_BETWEEN_RETRIES = 150;
+    public static final int SLEEP_AFTER_PASTE_IN_MS = 50;
     private String lastTopMostWindowResult;
 
+    /**
+     * Constructor.
+     */
     public MacWindowsManager() {
         delAppleScriptFilesForRefresh();
     }
@@ -47,7 +53,7 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
     public WindowInformation getActiveWindow() {
         String topMostWindowResult = null;
         try {
-            int tries = 3;
+            int tries = GET_ACTIVE_WINDOW_NUM_TRIES;
             do {
                 topMostWindowResult = runAppleScriptFile(GET_TOP_MOST_WINDOW_APPLESCRIPT_FILENAME);
 
@@ -70,20 +76,21 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
                                 .bottom(0)
                                 .left(0)
                                 .right(0)
-                                .processId(Integer.parseInt(activeWindowSegments[3]))
+                                .processId(Integer.parseInt(activeWindowSegments[GET_ACTIVE_WINDOW_NUM_TRIES]))
                                 .build();
 
                     }
                     lastTopMostWindowResult = topMostWindowResult;
                 }
-                Thread.sleep(150);
+                TimeUnit.MILLISECONDS.sleep(SLEEP_INTERVAL_BETWEEN_RETRIES);
                 tries--;
             } while (tries > 0);
         } catch (InterruptedException ex) {
             // Restore interrupted state...
             Thread.currentThread().interrupt();
         } catch (Exception ex) {
-            log.debug(String.format("Failed to get active window, top most window=[%s]", topMostWindowResult == null ? "null" : topMostWindowResult), ex);
+            log.debug(String.format("Failed to get active window, top most window=[%s]",
+                    topMostWindowResult == null ? "null" : topMostWindowResult), ex);
         }
         return null;
     }
@@ -92,11 +99,13 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
     public void paste() {
         log.debug("Pasting using osascript for CMD+V (Apple)");
         try {
-            // this is commented out as it doesn't work well when the command is on one language (English) and the operating system input is set to be in another language (such as Hebrew)
+            // this is commented out as it doesn't work well when the command is on one language (English) and the
+            // operating system input is set to be in another language (such as Hebrew)
             // so shifted to use cmd+V
-            //            Application.getContext().getKeepExecutionManager().executeCommand("osascript -e 'tell application \"System Events\" to keystroke \"v\" using command down'");
+            //            Application.getContext().getKeepExecutionManager().executeCommand(
+            //            "osascript -e'tell application \"System Events\" to keystroke \"v\" using command down'");
             cmdV();
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MILLISECONDS.sleep(SLEEP_AFTER_PASTE_IN_MS);
 //        } catch (IOException e) {
 //            log.error("Failed to paste for mac", e);
         } catch (InterruptedException e) {
@@ -166,7 +175,8 @@ public final class MacWindowsManager extends BaseWindowManager implements Window
     }
 
     /**
-     * Will delete the used applescript files from the .keepaste folder in order to keep those refreshed, if any changes were done to them between versions.
+     * Will delete the used applescript files from the .keepaste folder in order to keep those refreshed, if any changes
+     * were done to them between versions.
      */
     private void delAppleScriptFilesForRefresh() {
         FileSystemUtils.deleteFile(FileSystemUtils.getKeepasteDirectory().concat("/").concat(GET_TOP_MOST_WINDOW_APPLESCRIPT_FILENAME));

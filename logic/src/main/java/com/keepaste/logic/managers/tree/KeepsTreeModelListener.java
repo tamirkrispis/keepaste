@@ -22,15 +22,38 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 
 public class KeepsTreeModelListener implements TreeModelListener {
+    /**
+     * When tree nodes were changed.
+     *
+     * @param e a {@code TreeModelEvent} describing changes to a tree model
+     */
     public void treeNodesChanged(TreeModelEvent e) {
         // do nothing
     }
+
+    /**
+     * When tree nodes were inserted.
+     *
+     * @param e a {@code TreeModelEvent} describing changes to a tree model
+     */
     public void treeNodesInserted(TreeModelEvent e) {
         // do nothing
     }
+
+    /**
+     * When tree nodes were removed.
+     *
+     * @param e a {@code TreeModelEvent} describing changes to a tree model
+     */
     public void treeNodesRemoved(TreeModelEvent e) {
         // do nothing
     }
+
+    /**
+     * When tree nodes structure changed.
+     *
+     * @param e a {@code TreeModelEvent} describing changes to a tree model
+     */
     public void treeStructureChanged(TreeModelEvent e) {
         // do nothing
     }

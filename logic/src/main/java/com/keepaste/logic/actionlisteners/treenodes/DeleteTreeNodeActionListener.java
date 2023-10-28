@@ -21,6 +21,7 @@ package com.keepaste.logic.actionlisteners.treenodes;
 import com.keepaste.logic.Application;
 import com.keepaste.logic.models.KeepNode;
 import com.keepaste.logic.views.ViewTree;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,12 @@ import java.awt.event.ActionEvent;
 @Log4j2
 public class DeleteTreeNodeActionListener extends BaseTreeNodeActionListener {
 
-    public DeleteTreeNodeActionListener(ViewTree viewTree) {
+    /**
+     * Constructor.
+     *
+     * @param viewTree  {@link ViewTree}
+     */
+    public DeleteTreeNodeActionListener(@NonNull final ViewTree viewTree) {
         super(viewTree);
     }
 
@@ -39,15 +45,16 @@ public class DeleteTreeNodeActionListener extends BaseTreeNodeActionListener {
     public void actionPerformed(ActionEvent e) {
         log.debug("TreeNodes - Deleting a node from the tree");
         if (getViewTree().getRootTreeNode().equals(getViewTree().getSelectedNode())) {
-            JOptionPane.showMessageDialog(Application.getContext().getGui(), "You cannot delete the Keeps root node", "Cannot delete root", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                    "You cannot delete the Keeps root node", "Cannot delete root", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
         int deletionConfirmed = JOptionPane.showConfirmDialog(
                 Application.getContext().getGui().getContentPane(),
-                String.format("Are you sure you want to delete node \"%s\"", ((KeepNode) getViewTree().getSelectedNode().getUserObject()).getTitle()),
-                "Node deletion",
-                JOptionPane.YES_NO_OPTION);
+                String.format("Are you sure you want to delete node \"%s\"",
+                        ((KeepNode) getViewTree().getSelectedNode().getUserObject()).getTitle()),
+                        "Node deletion", JOptionPane.YES_NO_OPTION);
 
         if (deletionConfirmed == JOptionPane.YES_OPTION) {
             getViewTree().removeSelectedKeepFromTree();

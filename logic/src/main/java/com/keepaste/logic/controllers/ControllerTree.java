@@ -31,8 +31,15 @@ import java.io.IOException;
  */
 public class ControllerTree extends BaseController {
 
-    final ModelTree modelTree;
+    private final ModelTree modelTree;
 
+    /**
+     * Constructor.
+     *
+     * @param modelTree     {@link ModelTree}
+     * @param viewTree      {@link ViewTree}
+     * @throws IOException  on error
+     */
     public ControllerTree(@NonNull final ModelTree modelTree,
                           @NonNull final ViewTree viewTree) throws IOException {
         this.modelTree = modelTree;

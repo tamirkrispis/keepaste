@@ -38,7 +38,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
     private static final Set<String> KNOWN_KEEPS_ICONS = Set.of("mvn");
 
     @Override
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    public Component getTreeCellRendererComponent(
+            JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
         JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
         KeepNode keepNode = null;

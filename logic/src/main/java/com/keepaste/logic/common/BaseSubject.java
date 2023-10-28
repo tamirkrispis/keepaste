@@ -29,7 +29,7 @@ import java.util.List;
  */
 public abstract class BaseSubject implements Subject {
 
-    final List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     /**
      * Adds an observer to the subject.

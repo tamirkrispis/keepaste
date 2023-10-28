@@ -40,17 +40,19 @@ import java.util.Enumeration;
  */
 @Log4j2
 public class ViewTree implements View {
+    public static final int TOOLTIP_SHOW_DELAY_IN_MS = 500;
+    public static final int TOOLTIP_DISMISS_DELAY_IN_MS = 30000;
     @Getter
-    public JTree tree;
+    private JTree tree;
     @Getter
-    DefaultMutableTreeNode rootTreeNode;
+    private DefaultMutableTreeNode rootTreeNode;
     @Getter
-    DefaultMutableTreeNode parentOfSelectedNode;
+    private DefaultMutableTreeNode parentOfSelectedNode;
     @Getter
-    DefaultMutableTreeNode selectedNode;
-    final DeleteTreeNodeActionListener deleteTreeNodeActionListener;
-    final ImportKeepsActionListener importKeepsActionListener;
-    final ExportKeepsActionListener exportKeepsActionListener;
+    private  DefaultMutableTreeNode selectedNode;
+    private final DeleteTreeNodeActionListener deleteTreeNodeActionListener;
+    private final ImportKeepsActionListener importKeepsActionListener;
+    private final ExportKeepsActionListener exportKeepsActionListener;
 
     public ViewTree() {
         deleteTreeNodeActionListener = new DeleteTreeNodeActionListener(this);
@@ -135,9 +137,9 @@ public class ViewTree implements View {
         }
 
         ToolTipManager.sharedInstance().registerComponent(tree);
-        ToolTipManager.sharedInstance().setInitialDelay(500);
-        ToolTipManager.sharedInstance().setReshowDelay(500);
-        ToolTipManager.sharedInstance().setDismissDelay(30000);
+        ToolTipManager.sharedInstance().setInitialDelay(TOOLTIP_SHOW_DELAY_IN_MS);
+        ToolTipManager.sharedInstance().setReshowDelay(TOOLTIP_SHOW_DELAY_IN_MS);
+        ToolTipManager.sharedInstance().setDismissDelay(TOOLTIP_DISMISS_DELAY_IN_MS);
         ToolTipManager.sharedInstance().setLightWeightPopupEnabled(true);
 
         setCustomCellRenderer();
@@ -169,7 +171,7 @@ public class ViewTree implements View {
     }
 
     public void resetSelectedNode() {
-        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultTreeModel model = (DefaultTreeModel)getTree().getModel();
         model.nodeChanged(getSelectedNode());
     }
 
@@ -266,9 +268,10 @@ public class ViewTree implements View {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode)
                         tree.getLastSelectedPathComponent();
 
-                if (node == null)
+                if (node == null) {
                     //Nothing is selected.
                     return;
+                }
 
                 if (SwingUtilities.isRightMouseButton(e) || e.getButton() == MouseEvent.BUTTON3 || e.isControlDown()) {
                     KeepNode keepNode = (KeepNode) node.getUserObject();
@@ -297,10 +300,10 @@ public class ViewTree implements View {
                     KeepNode keepNode = (KeepNode) clickedOnNode.getUserObject();
                     if (e.getClickCount() == 2) {
                         if (clickedOnNode.isLeaf() && !(keepNode instanceof KeepsGroup)) {
-                            if (/*OperatingSystemUtils.getOperatingSystemType() == OperatingSystemUtils.OperatingSystemType.WINDOWS && */Application.getContext().getModelSettings().isFocusOnWindowAndPaste() && Application.getContext().getModelActiveWindow().getActiveWindow() == null) {
-                                JOptionPane.showMessageDialog(Application.getContext().getGui(), "Please select a window by clicking on it in order to run Keeps", "No active window", JOptionPane.WARNING_MESSAGE);
-                                return;
-                            }
+//                            if (/*OperatingSystemUtils.getOperatingSystemType() == OperatingSystemUtils.OperatingSystemType.WINDOWS && */Application.getContext().getModelSettings().isFocusOnWindowAndPaste() && Application.getContext().getModelActiveWindow().getActiveWindow() == null) {
+//                                JOptionPane.showMessageDialog(Application.getContext().getGui(), "Please select a window by clicking on it in order to run Keeps", "No active window", JOptionPane.WARNING_MESSAGE);
+//                                return;
+//                            }
 
                             Application.getContext().getKeepExecutionManager().executeKeepOnWindow((Keep) clickedOnNode.getUserObject());
                         }

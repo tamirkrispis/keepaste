@@ -94,7 +94,7 @@ public class ModelSettings extends BaseModel {
     }
 
     /**
-     * If the window should be always on top
+     * If the window should be always on top.
      * @param value the value
      */
     public void setAlwaysOnTop(final boolean value) {

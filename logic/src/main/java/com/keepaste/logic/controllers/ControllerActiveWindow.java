@@ -34,6 +34,12 @@ import lombok.NonNull;
  */
 public class ControllerActiveWindow extends BaseSubject implements Observer {
 
+    /**
+     * Constructor.
+     *
+     * @param modelActiveWindow {@link ModelActiveWindow}
+     * @param viewActiveWindow  {@link ViewActiveWindow}
+     */
     public ControllerActiveWindow(@NonNull final ModelActiveWindow modelActiveWindow,
                                   @NonNull final ViewActiveWindow viewActiveWindow) {
         // ModelActiveWindow --> ControllerActiveWindow --> ViewActiveWindow

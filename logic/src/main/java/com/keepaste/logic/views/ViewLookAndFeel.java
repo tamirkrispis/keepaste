@@ -34,7 +34,7 @@ import java.awt.*;
 @Log4j2
 public class ViewLookAndFeel implements View {
 
-    final ViewTree viewTree;
+    private final ViewTree viewTree;
 
     /**
      * Constuctor.
