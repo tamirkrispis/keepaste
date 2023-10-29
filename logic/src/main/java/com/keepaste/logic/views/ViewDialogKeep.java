@@ -54,6 +54,7 @@ public class ViewDialogKeep {
         dialogKeep.textName.setText(keep.getTitle());
         dialogKeep.textKeep.setText(keep.getPhrase());
         dialogKeep.textDescription.setText(keep.getDescription());
+        dialogKeep.checkNeverPressEnter.setSelected(keep.isNeverPressEnter());
 
         // parameters
         this.editedParameters = keep.getParameters() == null ? new ArrayList<>() : new ArrayList<>(keep.getParameters());
@@ -67,18 +68,21 @@ public class ViewDialogKeep {
 
         dialogKeep.buttonOK.addActionListener(e -> {
             if (dialogKeep.tableParams.isEditing()) {
-                TableCellEditor cellEditor = dialogKeep.tableParams.getCellEditor(dialogKeep.tableParams.getEditingRow(), dialogKeep.tableParams.getEditingColumn());
+                TableCellEditor cellEditor = dialogKeep.tableParams.getCellEditor(
+                        dialogKeep.tableParams.getEditingRow(), dialogKeep.tableParams.getEditingColumn());
                 if (cellEditor != null) {
                     cellEditor.stopCellEditing();
                 }
             }
             if (StringUtils.isEmpty(dialogKeep.textKeep.getText()) || StringUtils.isEmpty(dialogKeep.textName.getText())) {
-                JOptionPane.showMessageDialog(Application.getContext().getGui(), "Both Name and Keep fields are mandatory", "Not enough...", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                        "Both Name and Keep fields are mandatory", "Not enough...", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             // validating that there are no duplications in parameter names
             if (editedParameters.stream().map(KeepParameter::getName).distinct().count() < editedParameters.size()) {
-                JOptionPane.showMessageDialog(Application.getContext().getGui(), "There are duplications in parameters names, please review");
+                JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                        "There are duplications in parameters names, please review");
                 return;
             }
 
@@ -88,7 +92,8 @@ public class ViewDialogKeep {
                 commandStr = commandStr.replace(String.format("<%s>", parameter.getName()), "");
             }
             if (commandStr.contains("<") && commandStr.contains(">")) {
-                JOptionPane.showMessageDialog(Application.getContext().getGui(), "Given parameters does not cover all keep parameters, please add missing ones");
+                JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                        "Given parameters does not cover all keep parameters, please add missing ones");
                 return;
             }
 
@@ -99,7 +104,8 @@ public class ViewDialogKeep {
                     if (otherParameters == parameter) {
                         // validating that a keep parameter doesn't reference itself
                         if (parameterPhrase.contains(String.format("<%s>", parameter.getName()))) {
-                            JOptionPane.showMessageDialog(Application.getContext().getGui(), String.format("The parameter %s cannot use its own name as a command parameter.", parameter.getName()));
+                            JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                                    String.format("The parameter %s cannot use its own name as a command parameter.", parameter.getName()));
                             return;
                         }
                     } else {
@@ -110,7 +116,9 @@ public class ViewDialogKeep {
                 int endIndex = parameterPhrase.indexOf(">", startIndex);
                 if (startIndex > 0 && endIndex > 0) {
                     String missingParamName = parameterPhrase.substring(startIndex + 1, endIndex);
-                    JOptionPane.showMessageDialog(Application.getContext().getGui(), String.format("Given parameters does not cover all used parameters (on keep or its parameters), please add the following missing parameter - %s", missingParamName));
+                    JOptionPane.showMessageDialog(Application.getContext().getGui(),
+                            String.format("Given parameters does not cover all used parameters (on keep or its parameters),"
+                                    + " please add the following missing parameter - %s", missingParamName));
                     return;
                 }
             }

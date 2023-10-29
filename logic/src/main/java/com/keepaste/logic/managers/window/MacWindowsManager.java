@@ -22,7 +22,6 @@ import com.keepaste.logic.Application;
 import com.keepaste.logic.managers.KeepsManager;
 import com.keepaste.logic.models.WindowInformation;
 import com.keepaste.logic.utils.FileSystemUtils;
-import com.keepaste.logic.utils.KeyboardUtils;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import java.io.File;
@@ -99,15 +98,9 @@ public final class MacWindowsManager implements WindowManager {
     public void paste() {
         log.debug("Pasting using osascript for CMD+V (Apple)");
         try {
-            // this is commented out as it doesn't work well when the command is on one language (English) and the
-            // operating system input is set to be in another language (such as Hebrew)
-            // so shifted to use cmd+V
-            //            Application.getContext().getKeepExecutionManager().executeCommand(
-            //            "osascript -e'tell application \"System Events\" to keystroke \"v\" using command down'");
-            cmdV();
+            Application.getContext().getKeepExecutionManager().executeCommand(
+                    "osascript -e 'tell application \"System Events\" to key code {9} using command down'");
             TimeUnit.MILLISECONDS.sleep(SLEEP_AFTER_PASTE_IN_MS);
-//        } catch (IOException e) {
-//            log.error("Failed to paste for mac", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
@@ -119,7 +112,8 @@ public final class MacWindowsManager implements WindowManager {
     public boolean focusOnActiveWindow(@NonNull final WindowInformation windowContext) {
         try {
             log.debug("Switching to next window");
-            Application.getContext().getKeepExecutionManager().executeCommandWithDefaultPath("osascript -e 'tell application \"System Events\" to key code 118 using control down'");
+            Application.getContext().getKeepExecutionManager().executeCommandWithDefaultPath(
+                    "osascript -e 'tell application \"System Events\" to key code 118 using control down'");
             // validating that the window is the desired one
             return Application.getContext().getModelActiveWindow().getActiveWindow().equals(windowContext);
         } catch (InterruptedException e) {
@@ -182,11 +176,4 @@ public final class MacWindowsManager implements WindowManager {
         FileSystemUtils.deleteFile(FileSystemUtils.getKeepasteDirectory().concat("/").concat(GET_TOP_MOST_WINDOW_APPLESCRIPT_FILENAME));
     }
 
-    /**
-     * imitating a cmd+v press for pasting on Mac.
-     */
-    private void cmdV() {
-        log.debug("Robot pressing CMD+V (pasting on mac)");
-        KeyboardUtils.cmdV();
-    }
 }

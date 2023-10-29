@@ -19,7 +19,6 @@
 package com.keepaste.logic.utils;
 
 import com.keepaste.logic.exceptions.KeepasteGenericException;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -30,7 +29,6 @@ import java.awt.event.KeyEvent;
 @Log4j2
 public final class KeyboardUtils {
     private static final Robot ROBOT;
-    public static final int ROBOT_DELAY_IN_MS = 50;
 
     private KeyboardUtils() {
         // private constructor for utils class
@@ -81,26 +79,4 @@ public final class KeyboardUtils {
         ROBOT.delay(ms);
     }
 
-    /**
-     * Will initiate cmd+v keypress sequence.
-     */
-    public static void cmdV() {
-        ROBOT.keyPress(KeyEvent.VK_SHIFT);
-        ROBOT.keyRelease(KeyEvent.VK_SHIFT);
-        // VK_META is problematic on Mac, so this is a hack for pressing it for several times, then releasing it, so at least one will be simulated
-        ROBOT.keyPress(KeyEvent.VK_META);
-        ROBOT.keyPress(KeyEvent.VK_META);
-        ROBOT.keyPress(KeyEvent.VK_META);
-        ROBOT.keyPress(KeyEvent.VK_META);
-        ROBOT.keyPress(KeyEvent.VK_META);
-        ROBOT.delay(ROBOT_DELAY_IN_MS);
-        ROBOT.keyPress(KeyEvent.VK_V);
-        ROBOT.delay(ROBOT_DELAY_IN_MS);
-        ROBOT.keyRelease(KeyEvent.VK_META);
-        ROBOT.keyRelease(KeyEvent.VK_META);
-        ROBOT.keyRelease(KeyEvent.VK_META);
-        ROBOT.keyRelease(KeyEvent.VK_META);
-        ROBOT.keyRelease(KeyEvent.VK_META);
-        ROBOT.keyRelease(KeyEvent.VK_V);
-    }
 }

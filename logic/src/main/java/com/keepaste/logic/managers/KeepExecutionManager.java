@@ -60,6 +60,9 @@ public final class KeepExecutionManager {
                 }
             } catch (Exception ex) {
                 log.error(String.format("Failed to get shell, using default shell of [%s]", shell), ex);
+                if (ex instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
     }
@@ -119,34 +122,23 @@ public final class KeepExecutionManager {
         SwingWorker<Void, String> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-//                try {
-                    String keepToExecute = manipulateParameters(keep, refreshParameters);
-                    log.info("Final Keep to execute [{}]", keepToExecute);
-                    if (!StringUtils.isEmpty(keepToExecute)) {
+                String keepToExecute = manipulateParameters(keep, refreshParameters);
+                log.info("Final Keep to execute [{}]", keepToExecute);
+                if (!StringUtils.isEmpty(keepToExecute)) {
 
-                        copyToClipboard(keepToExecute);
+                    copyToClipboard(keepToExecute);
 
-                        if (!Application.getContext().getModelSettings().isFocusOnWindowAndPaste()) {
-                            handleOnlyCopy();
+                    if (!Application.getContext().getModelSettings().isFocusOnWindowAndPaste()) {
+                        handleOnlyCopy();
+                    } else {
+                        if (isFocusOnActiveWindow(currentlyActiveWindow)) {
+                            pasteKeep();
+                            pressEnter(keep);
                         } else {
-                            if (isFocusOnActiveWindow(currentlyActiveWindow)) {
-                                pasteKeep();
-                                pressEnter(keep);
-                            } else {
-                                handleWrongTargetWindow();
-                            }
+                            handleWrongTargetWindow();
                         }
                     }
-//                }
-
-//                catch (Exception e) {
-//                    JOptionPane.showMessageDialog(Application.getContext().getGui(),
-//                            FAILED_TO_EXECUTE_KEEP,
-//                            "Bummer...",
-//                            JOptionPane.ERROR_MESSAGE);
-//                    log.error(FAILED_TO_EXECUTE_KEEP, e);
-//                    throw e;
-//                }
+                }
                 return null;
             }
 
@@ -239,12 +231,14 @@ public final class KeepExecutionManager {
      * Will execute a command in shell and return its output as a list of Strings.
      *
      * @param commandLines  the command lines to execute
-     * @param defaultPath   will use the default PATH env var and not the one set by the user, used for Keepaste internal commands (like intercepting the currently active window)
+     * @param defaultPath   will use the default PATH env var and not the one set by the user, used for Keepaste internal
+     *                      commands (like intercepting the currently active window)
      * @return  the execution output
      * @throws IOException in case of execution failure
      * @throws InterruptedException in case of execution failure
      */
-    public List<String> executeCommand(List<String> commandLines, boolean defaultPath) throws KeepExecutionException, IOException, InterruptedException {
+    public List<String> executeCommand(List<String> commandLines, boolean defaultPath)
+            throws KeepExecutionException, IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Set the working directory for the process
         processBuilder.directory(new File(FileSystemUtils.getUserHomeDirectory()));
@@ -411,7 +405,8 @@ public final class KeepExecutionManager {
         return selectedParamValue;
     }
 
-    private List<String> handleCommandTypeParamPhrase(KeepParameter parameter, Keep keep, Map<String, String> currentParameterValuesMap, boolean isRefreshGlobalParameters) {
+    private List<String> handleCommandTypeParamPhrase(
+            KeepParameter parameter, Keep keep, Map<String, String> currentParameterValuesMap, boolean isRefreshGlobalParameters) {
         List<String> keepResult = null;
 
         if (!isFreeTextTypeParam(parameter)) {
@@ -451,7 +446,8 @@ public final class KeepExecutionManager {
     }
 
 
-    private static String populateParamPhraseWithAlreadySetParams(KeepParameter parameter, Map<String, String> currentParameterValuesMap, String paramKeepString) {
+    private static String populateParamPhraseWithAlreadySetParams(
+            KeepParameter parameter, Map<String, String> currentParameterValuesMap, String paramKeepString) {
         // filling existing parameters values if already chosen and used in the next parameter
         for (Map.Entry<String, String> currParam : currentParameterValuesMap.entrySet()) {
             paramKeepString = paramKeepString.replace(String.format("<%s>", currParam.getKey()), currParam.getValue());
