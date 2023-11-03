@@ -1,0 +1,122 @@
+{
+  "@type": "KeepsGroup",
+  "title": "Keeps",
+  "icon": null,
+  "keepsNodes": [
+    {
+      "@type": "KeepsGroup",
+      "title": "Examples",
+      "icon": null,
+      "keepsNodes": [
+        {
+          "@type": "Keep",
+          "title": "1. Say hello",
+          "icon": null,
+          "phrase": "echo 'Hi there, friend!'",
+          "description": "Example for a straight forward command, no parameters.\nOpen a terminal window and double click this Keep node to execute it on the terminal.",
+          "parameters": []
+        },
+        {
+          "@type": "Keep",
+          "title": "2. Free-text parameter",
+          "icon": null,
+          "phrase": "echo 'Hi there, <some-name>'",
+          "description": "Example for using a free-text parameter.\nUse-cases: free input, names, filenames, dynamic variables, etc.\n'some-name' is a parameter, notice that it is marked with angle brackets surrounding it on the Keep, and it is defined on the Parameters table below.\nWhat makes it a free-text parameter is the fact that its ‘Parameter value’ field is left blank on the Parameters table.\nWhen you execute this keep it will first ask you to set a value to some-name, now you can say hello to anybody!",
+          "parameters": [
+            {
+              "name": "some-name",
+              "phrase": "",
+              "global": false
+            }
+          ]
+        },
+        {
+          "@type": "Keep",
+          "title": "3. Drop-down selection",
+          "icon": null,
+          "phrase": "echo 'Hi there, <some-name>'",
+          "description": "Example for using a parameter with a predefined list of values.\nUse-cases: predefined environments, namespaces, etc.\n'some-name' is a parameter, notice that it is marked with angle brackets surrounding it on the Keep, and it is defined on the\nParameters table below.\nWhat makes it a dropdown parameter holding specific values is the fact that its ‘Parameter value’ field holds a list of\nvalues inside parentheses and separated with commas on the Parameters table.\nWhen you execute this keep it will first ask you to set a value to some-name, now you can say hello only to the gang!",
+          "parameters": [
+            {
+              "name": "some-name",
+              "phrase": "[Sarah,Jonathan,Jenny,David]",
+              "global": false
+            }
+          ]
+        },
+        {
+          "@type": "Keep",
+          "title": "4. Command parameter",
+          "icon": null,
+          "phrase": "echo 'Hi there, <some-name>'",
+          "description": "Example for using a command parameter.\nUse-cases: get input values by running a command. Good examples are resource names (think AWS, K8S, Docker etc.), reading values from a file, etc.\n'some-name' is a parameter, notice that it is marked with angle brackets surrounding it on the Keep, and it is defined on the Parameters table below.\nWhat makes it a command parameter is the its ‘Parameter value’ field holds a straight-up command (meaning, it is not blank or surrounded with parenthesis) on the Parameters table.\nWhen you execute this keep it will first execute the parameter command, then, from the output of the command (which should be a multiline string or a json array),\nit will let you choose the desired value, now you can say hello to aliens as well!",
+          "parameters": [
+            {
+              "name": "some-name",
+              "phrase": "echo '[George,Jasmin]'",
+              "global": false
+            }
+          ]
+        },
+        {
+          "@type": "Keep",
+          "title": "5. Global parameter",
+          "icon": null,
+          "phrase": "echo 'Hi there, <first-name> <last-name>'",
+          "description": "Example for using a Global parameter.\nUse-cases: when you want to enter the value once for the same or across different Keeps using the same parameter. Good examples are K8S namespaces, AWS S3 bucket names,\nKafka bootstrap-server, etc.\n'some-name' is a parameter, notice that it is marked with angle brackets surrounding it on the Keep, and it is defined on the Parameters table below.\nWhat makes it a Global parameter is the fact that the its ‘Global’ field is checked on the Parameters table.\nAny type of parameter can become a Global parameter as well.\nWhen you execute this keep it will first ask you to set a value for last-name only once, then, when you run it again (or a different Keep with the same parameter named ‘last-name’)\nit will already contain the selected value and not ask for it again. The current value of Global parameters appears on a Keep tooltip.\nIf you wish to change the value of a global parameter, just right-click on a Keep and choose the ‘Execute with refreshed parameters’ option, now you can say hello to the ‘last-name’ family!",
+          "parameters": [
+            {
+              "name": "first-name",
+              "phrase": "",
+              "global": false
+            },
+            {
+              "name": "last-name",
+              "phrase": "",
+              "global": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "KeepsGroup",
+      "title": "Resources",
+      "icon": null,
+      "keepsNodes": [
+        {
+          "@type": "Keep",
+          "title": "Keepaste on GitHub",
+          "icon": null,
+          "phrase": "https://github.com/tamirkrispis/keepaste",
+          "description": "Keepaste is open-source, visit the repository on GitHub.\nYou can open a browser, focus on the address bar and double-click this Keep node to go there.",
+          "parameters": []
+        },
+        {
+          "@type": "Keep",
+          "title": "Keepaste.com",
+          "icon": null,
+          "phrase": "https://www.keepaste.com",
+          "description": "The address for keepaste's website.\nYou can open a browser, focus on the address bar and double-click this Keep node to go there.",
+          "parameters": []
+        },
+        {
+          "@type": "Keep",
+          "title": "Keeps-library on GitHub",
+          "icon": null,
+          "phrase": "https://github.com/tamirkrispis/keeps-library",
+          "description": "Get some popular Keeps from the Keeps-library on GitHub.\nJust download the desired json files, right click anywhere on the Keeps-tree on Keepaste, choose import,\nselect the file and you should be good to go!\nYou can open a browser, focus on the address bar and double-click this Keep node to go there.",
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "@type": "Keep",
+      "title": "clear terminal",
+      "icon": null,
+      "phrase": "clear",
+      "description": "Clears the terminal.",
+      "parameters": []
+    }
+  ]
+}
