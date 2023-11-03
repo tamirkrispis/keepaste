@@ -102,6 +102,7 @@
                                 </transformer>
                             </transformers>
                             <finalName>Keepaste-${project.version}</finalName>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
                 </executions>

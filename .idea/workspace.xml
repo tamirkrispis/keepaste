@@ -7,8 +7,6 @@
     <list default="true" id="6de6f09b-5ea6-4a7f-b72b-1e2e46cfd6a5" name="Changes" comment="Deleted versions backup files">
       <change beforePath="$PROJECT_DIR$/logic/dependency-reduced-pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/logic/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/logic/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logic/src/main/java/com/keepaste/logic/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/logic/src/main/java/com/keepaste/logic/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/checkout/logic/src/main/java/com/keepaste/logic/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/checkout/logic/src/main/java/com/keepaste/logic/Application.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +142,7 @@
       <workItem from="1698420358486" duration="13014000" />
       <workItem from="1698594600916" duration="8273000" />
       <workItem from="1698992328188" duration="3748000" />
+      <workItem from="1699013840153" duration="300000" />
     </task>
     <task id="LOCAL-00001" summary="Initial index page to test GitHub Pages">
       <created>1690121385769</created>
@@ -341,7 +340,8 @@
     <MESSAGE value="Short code cleanup session" />
     <MESSAGE value="- paste on mac matured&#10;- never press enter checkbox state on keep edit dialog fixed" />
     <MESSAGE value="Deleted versions backup files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted versions backup files" />
+    <MESSAGE value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
