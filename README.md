@@ -137,6 +137,8 @@ Keepaste supports themes for the GUI, you can switch between Light and Dark them
 
 - Issue: On Mac, when I double-click a Keep to execute it, it doesn't switch to the active window.
     - Workaround: Change the settings using the top menu so Keepaste won't be always on top and give it another go.
+- Issue: On Windows, Keepaste won't identify some of my windows.
+  - Workaround: These windows may run in higher privileges ("Run as administrator"), all you need to do is also run Keepaste as an administrator (Right-click on the Keepaste executable and choose "Run as administrator") and it will be able to get those as well.
 
 ## Contribution, Support and Feedback
 Keepaste was built as a side project to support my day to day software development work, due to that, it currently lacks things like comprehensive commenting, testing, and some nice-to-have features.
