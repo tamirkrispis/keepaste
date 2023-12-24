@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,43 +30,46 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This utility class is for managing the {@link ModelSettings}.
+ * This utility class is for managing the {@code ModelSettings}.
  */
 @Log4j2
-public abstract class SettingsManager {
-    private static final SettingsToFile DEFAULT_MODEL_SETTINGS = SettingsToFile.builder()
-            .copyToClipboard(true)
-            .focusOnWindowAndPaste(true)
-            .pressEnterAfterPaste(true)
-            .themeClassName("FlatMacDarkLaf")
-            .alwaysOnTop(true)
-            .path(System.getenv("PATH"))
-            .build();
+public final class SettingsManager {
+
+    /**
+     * private constructor as this is a utility class.
+     */
+    private SettingsManager() {
+        // do nothing
+    }
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final File SETTINGS_FILE = new File(FileSystemUtils.getKeepasteDirectory().concat("/settings.json"));
 
     /**
-     * Will load settings from file.
+     * Will load settings from file or create and return default one if not exists or there is an issue loading it.
      *
-     * @return a {@link ModelSettings}
+     * @return a {@code ModelSettings}
      */
-    public static ModelSettings loadSettingsFromFile() {
-        validateSettingsFileExists();
-        try {
-            log.debug("Loading settings file [{}]", SETTINGS_FILE.getPath());
-            SettingsToFile settingsToFile = MAPPER.readValue(SETTINGS_FILE, SettingsToFile.class);
-            return parseSettingsToFileToModelSettings(settingsToFile);
-        } catch (IOException e) {
-            log.error(String.format("Failed to load settings from file [%s]", SETTINGS_FILE), e);
+    public static ModelSettings getModelSettings() {
+        ModelSettings modelSettings = loadSettingsFromFile();
+
+        // in case there is an issue loading the settings file, create a default one instead
+        if (modelSettings == null) {
+            SettingsManager.createDefaultSettingsFile();
+            modelSettings = SettingsManager.loadSettingsFromFile();
         }
-        return null;
+
+        if (modelSettings == null) {
+            modelSettings = SettingsManager.getDefaultModelSettings();
+        }
+        return modelSettings;
     }
+    
 
     /**
-     * Will save the given {@link ModelSettings} to a file.
+     * Will save the given {@code ModelSettings} to a file.
      *
-     * @param settings the {@link ModelSettings} to persis
+     * @param settings the {@code ModelSettings} to persis
      */
     public static void saveSettingsToFile(ModelSettings settings) {
         validateSettingsFileExists();
@@ -96,19 +99,35 @@ public abstract class SettingsManager {
     }
 
     /**
-     * Will get the default {@link ModelSettings} once one of the user is not present (persisted already).
+     * Will get the default {@code ModelSettings} once one of the user is not present (persisted already).
      *
-     * @return the default {@link ModelSettings}
+     * @return the default {@code ModelSettings}
      */
     public static ModelSettings getDefaultModelSettings() {
         return parseSettingsToFileToModelSettings(getDefaultSettings());
     }
 
+    /**
+     * Will load settings from a file.
+     *
+     * @return {@code ModelSettings}
+     */
+    private static ModelSettings loadSettingsFromFile() {
+        validateSettingsFileExists();
+        try {
+            log.debug("Loading settings file [{}]", SETTINGS_FILE.getPath());
+            SettingsToFile settingsToFile = MAPPER.readValue(SETTINGS_FILE, SettingsToFile.class);
+            return parseSettingsToFileToModelSettings(settingsToFile);
+        } catch (IOException e) {
+            log.error(String.format("Failed to load settings from file [%s]", SETTINGS_FILE), e);
+        }
+        return null;
+    }
 
     /**
-     * Will parse a model representing the file - {@link SettingsToFile} to a genuine {@link ModelSettings}.
+     * Will parse a model representing the file - {@code SettingsToFile} to a genuine {@code ModelSettings}.
      *
-     * @return a {@link ModelSettings}
+     * @return a {@code ModelSettings}
      */
     private static ModelSettings parseSettingsToFileToModelSettings(SettingsToFile settingsToFile) {
         LookAndFeel lookAndFeel = new FlatMacDarkLaf();
@@ -126,7 +145,7 @@ public abstract class SettingsManager {
     }
 
     /**
-     * Will save the given {@link SettingsToFile} to a file.
+     * Will save the given {@code SettingsToFile} to a file.
      *
      * @param settings the settings to persist
      */
@@ -149,6 +168,13 @@ public abstract class SettingsManager {
     }
 
     private static SettingsToFile getDefaultSettings() {
-        return DEFAULT_MODEL_SETTINGS;
+        return SettingsToFile.builder()
+                .copyToClipboard(true)
+                .focusOnWindowAndPaste(true)
+                .pressEnterAfterPaste(true)
+                .themeClassName("FlatMacDarkLaf")
+                .alwaysOnTop(true)
+                .path(System.getenv("PATH"))
+                .build();
     }
 }

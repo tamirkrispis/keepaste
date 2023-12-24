@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,6 +23,7 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.io.File;
+import java.nio.file.Files;
 
 /**
  * This class is a utility class for anything related to the file system.
@@ -69,15 +70,14 @@ public final class FileSystemUtils {
         return HOME_DIRECTORY;
     }
 
-    public static boolean isHomeDirectoryExists() {
-        return new File(HOME_DIRECTORY).exists();
-    }
-
-    public static boolean deleteFile(@NonNull final String filepath) {
+    public static void deleteFile(@NonNull final String filepath) {
         File file = new File(filepath);
         if (file.exists()) {
-            return file.delete();
+            try {
+                Files.delete(file.toPath());
+            } catch (Exception ex) {
+                log.error(String.format("Failed to delete file [%s]", filepath), ex);
+            }
         }
-        return true;
     }
 }

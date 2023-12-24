@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,7 +36,7 @@ import java.util.*;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
- * This utility class holds methods for managing {@link Keep}s.
+ * This utility class holds methods for managing {@code Keep}s.
  */
 @Log4j2
 public final class KeepsManager {
@@ -91,7 +91,7 @@ public final class KeepsManager {
      * Will save the current tree structure into a file.
      *
      * @param rootNodeContext   the root node of the tree
-     * @param toFile            the {@link File} where to persist the tree structure
+     * @param toFile            the {@code File} where to persist the tree structure
      */
     public void saveKeeps(KeepsGroup rootNodeContext, File toFile) {
         try {
@@ -139,7 +139,7 @@ public final class KeepsManager {
      * Will return all unique parameters from across the entire tree, this is used for adding an existing parameter on the
      * edit Keep dialog.
      *
-     * @return a List of {@link KeepParameter}s
+     * @return a List of {@code KeepParameter}s
      */
     public List<KeepParameter> getAllUniqueParameters() {
         log.debug("Getting all unique parameters");
@@ -150,7 +150,7 @@ public final class KeepsManager {
     }
 
     /**
-     * Will return a json representation of a {@link Keep}.
+     * Will return a json representation of a {@code Keep}.
      *
      * @param keep  the keep
      * @return      a json representation of the keep
@@ -162,10 +162,10 @@ public final class KeepsManager {
     }
 
     /**
-     * Will return a {@link KeepNode} out of a JSON {@link File}.
+     * Will return a {@code KeepNode} out of a JSON {@code File}.
      *
      * @param jsonFile      the json file
-     * @return a {@link KeepNode} out of a JSON {@link File}.
+     * @return a {@code KeepNode} out of a JSON {@code File}.
      * @throws IOException upon failure
      */
     public KeepNode getKeepFromJsonFile(File jsonFile) throws IOException {

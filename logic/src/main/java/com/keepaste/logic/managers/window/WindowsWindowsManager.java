@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,7 +35,7 @@ import lombok.extern.log4j.Log4j2;
 import java.awt.event.KeyEvent;
 
 /**
- * This class is Windows's {@link WindowManager}, it holds relevant methods related to windows management in the Windows OS.
+ * This class is Windows's {@code WindowManager}, it holds relevant methods related to windows management in the Windows OS.
  */
 @Log4j2
 public final class WindowsWindowsManager implements WindowManager {
@@ -94,7 +94,6 @@ public final class WindowsWindowsManager implements WindowManager {
                         .bottom(windowinfo.rcWindow.bottom)
                         .build();
 
-//                if (lastTopMostWindow == null || (topMostWindow.getProcessId() != lastTopMostWindow.getProcessId())) {
                 if (!topMostWindow.equals(lastTopMostWindow)) {
                     log.debug("top most window = [{}]", topMostWindow);
                 }
@@ -124,9 +123,7 @@ public final class WindowsWindowsManager implements WindowManager {
         try {
             WindowInformation activeWindow = Application.getContext().getModelActiveWindow().getActiveWindow();
             if (activeWindow != null) {
-                /*WinDef.HWND result = */
                 User32DLL.SetFocus(activeWindow.getHwnd());
-//        CommandAction.User32DLL.ShowWindow(ActiveWindow.activeWindow.getHwnd(), User32.SW_RESTORE);
                 User32DLL.SetForegroundWindow(activeWindow.getHwnd());
                 return true;
             } else {
@@ -140,11 +137,16 @@ public final class WindowsWindowsManager implements WindowManager {
     }
 
     static class User32DLL {
+
+        private User32DLL() {
+            // do nothing
+        }
+
         static {
             Native.register("user32");
         }
 
-        //        public static native int GetWindowThreadProcessId(HWND hWnd, PointerByReference pref);
+//        public static native int GetWindowThreadProcessId(HWND hWnd, PointerByReference pref);
 //        public static native HWND GetForegroundWindow();
 //        public static native int GetWindowTextW(HWND hWnd, char[] lpString, int nMaxCount);
         public static native WinDef.HWND SetFocus(WinDef.HWND hWnd);

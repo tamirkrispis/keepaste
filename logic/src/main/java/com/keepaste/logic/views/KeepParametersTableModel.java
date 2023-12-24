@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 /**
- * This class is a model for a Keep's parameters as shown on the {@link com.keepaste.gui.DialogKeep}.
+ * This class is a model for a Keep's parameters as shown on the {@code com.keepaste.gui.DialogKeep}.
  */
 public class KeepParametersTableModel extends AbstractTableModel {
     private final String[] columns = {"Parameter name", "Parameter value", "Global"};
@@ -84,24 +84,18 @@ public class KeepParametersTableModel extends AbstractTableModel {
      * rather than a checkbox.
      */
     @Override
-    public Class getColumnClass(int c) {
+    public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
 
-            /*
-             * Don't need to implement this method unless your table's
-             * editable.
-             */
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                //Note that the data/cell address is constant,
-                //no matter where the cell appears onscreen.
-//                if (col < 2) {
-//                    return false;
-//                } else {
-                    return true;
-//                }
-            }
+    /*
+     * Don't need to implement this method unless your table's
+     * editable.
+     */
+    @Override
+    public boolean isCellEditable(int row, int col) {
+            return true;
+    }
 
     /*
      * Don't need to implement this method unless your table's
