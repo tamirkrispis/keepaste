@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -55,7 +55,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
- * This class holds the main entry point for the application and holds a reference to the {@link Context}.
+ * This class holds the main entry point for the application and holds a reference to the {@code Context}.
  */
 @Log4j2
 public final class Application {
@@ -76,96 +76,107 @@ public final class Application {
      */
     public static void main(String[] args) {
         try {
-            // Load settings from disk
-            ModelSettings modelSettings = SettingsManager.loadSettingsFromFile();
-            // in case there is an issue loading the settings file, create a default one instead
-            if (modelSettings == null) {
-                SettingsManager.createDefaultSettingsFile();
-                modelSettings = SettingsManager.loadSettingsFromFile();
-            }
-            if (modelSettings == null) {
-                modelSettings = SettingsManager.getDefaultModelSettings();
-            }
+            // checking if there is a new release available
+            checkForNewRelease();
 
+            // Load settings from disk or get default instance
+            ModelSettings modelSettings = SettingsManager.getModelSettings();
+
+            // set look and feel based on settings
             setInitialLookAndFeel(modelSettings);
 
-            final Gui gui = new Gui();
+            // generating app context to be used
+            context = generateContext(modelSettings);
 
-            if (OperatingSystemUtils.getOperatingSystemType() == OperatingSystemUtils.OperatingSystemType.WINDOWS) {
-                gui.setMinimumSize(new Dimension(APP_MIN_WIDTH, gui.getHeight()));
-            }
-            ModelActiveWindow modelActiveWindow = new ModelActiveWindow();
-            context = new Context(
-                    gui,
-                    getWindowManager(),
-                    modelSettings,
-                    new KeepsManager(),
-                    new KeepExecutionManager(),
-                    modelActiveWindow);
-            boolean isFirstTimeRunning = !new File(context.getKeepsManager().getKeepsFilePathString()).exists();
-            checkForNewRelease();
-            Image logoImage = ImagesUtils.getImage("/logo-white.png");
-
-            // Create and display the form
-            ModelSettings finalModelSettings = modelSettings;
-            EventQueue.invokeLater(() -> {
-                try {
-                    gui.setIconImage(logoImage);
-                    gui.labelBackground.setVisible(false);
-
-                    // Intercepted window shown on status bar
-                    ViewActiveWindow viewActiveWindow = new ViewActiveWindow(gui.labelTargetWindow, gui.labelTargetWindowTitle);
-                    new ControllerActiveWindow(modelActiveWindow, viewActiveWindow);
-
-                    // Top menu bar
-                    ViewTopMenu viewTopMenu = new ViewTopMenu(gui.menuItemMain, gui.menuItemAbout, gui.menuItemHeart);
-                    viewTopMenu.initUpperMenuBar();
-                    new ControllerTopMenu(modelActiveWindow, viewActiveWindow, viewTopMenu.getLockingMenuItem());
-
-                    // Tree
-                    ViewTree viewTree = new ViewTree();
-                    ModelTree modelTree = new ModelTree();
-                    new ControllerTree(modelTree, viewTree);
-
-                    // look and feel (theme) controller
-                    ViewLookAndFeel viewLookAndFeel = new ViewLookAndFeel(viewTree);
-                    new ControllerLookAndFeel(finalModelSettings, viewLookAndFeel);
-
-                    final Toolkit toolkit = java.awt.Toolkit.getDefaultToolkit();
-                    final Dimension screenSize = toolkit.getScreenSize();
-
-                    // do not change the order of these two next lines, setLocationRelativeTo sets the window in the center,
-                    // but allows ctrl+f4 on Mac, while the second line set the window on a specific position.
-                    // having those reversed will cause ctrl+f4 which is being used to switch between windows to stop working
-                    // on always on top mode.
-                    gui.setLocationRelativeTo(null);
-                    gui.setLocation(
-                            (int) screenSize.getWidth() - gui.getWidth() - LOCATION_MARGIN,
-                            (int) screenSize.getHeight() - gui.getHeight() - LOCATION_MARGIN);
-
-                    gui.setAlwaysOnTop(finalModelSettings.isAlwaysOnTop());
-
-                    gui.setVisible(true);
-                    finalModelSettings.setLookAndFeel(finalModelSettings.getTheme());
-                    log.info("Gui initialized");
-
-                    if (isFirstTimeRunning) {
-                        // this is the first time keepaste runs on this machine, showing the welcome dialog
-                        DialogWelcome dialogWelcome = new DialogWelcome(gui, true);
-                        GuiUtils.initHyperlinkLabel(dialogWelcome.labelTutorial, "http://www.keepaste.com/tutorial.htm");
-                        GuiUtils.initHyperlinkLabel(dialogWelcome.labelKeepsLibrary, "https://github.com/tamirkrispis/keeps-library");
-                        GuiUtils.showDialogOnCenterScreen(dialogWelcome);
-                    }
-                } catch (Exception ex) {
-                    log.error("Failed to initialize gui", ex);
-                    System.exit(1);
-                }
-
-                context.startWindowInterceptorRunner();
-            });
+            // initializing and displaying the GUI
+            initGui();
+            
         } catch (Exception ex) {
             log.error("Failed to start the application", ex);
         }
+    }
+
+    private static void initGui() {
+        // Create and display the form
+        EventQueue.invokeLater(() -> {
+            try {
+                Gui gui = context.getGui();
+                // setting minimum size for windows
+                if (OperatingSystemUtils.getOperatingSystemType() == OperatingSystemUtils.OperatingSystemType.WINDOWS) {
+                    gui.setMinimumSize(new Dimension(APP_MIN_WIDTH, gui.getHeight()));
+                }
+
+                gui.setIconImage(getLogoImage());
+                gui.labelBackground.setVisible(false);
+
+                // Intercepted window shown on status bar
+                ViewActiveWindow viewActiveWindow = new ViewActiveWindow(gui.labelTargetWindow, gui.labelTargetWindowTitle);
+                new ControllerActiveWindow(context.getModelActiveWindow(), viewActiveWindow);
+
+                // Top menu bar
+                ViewTopMenu viewTopMenu = new ViewTopMenu(gui.menuItemMain, gui.menuItemAbout, gui.menuItemHeart);
+                viewTopMenu.initUpperMenuBar();
+                new ControllerTopMenu(context.getModelActiveWindow(), viewActiveWindow, viewTopMenu.getLockingMenuItem());
+
+                // Tree
+                ViewTree viewTree = new ViewTree();
+                ModelTree modelTree = new ModelTree();
+                new ControllerTree(modelTree, viewTree);
+
+                // look and feel (theme) controller
+                ViewLookAndFeel viewLookAndFeel = new ViewLookAndFeel(viewTree);
+                new ControllerLookAndFeel(context.getModelSettings(), viewLookAndFeel);
+
+                final Toolkit toolkit = Toolkit.getDefaultToolkit();
+                final Dimension screenSize = toolkit.getScreenSize();
+
+                // do not change the order of these two next lines, setLocationRelativeTo sets the window in the center,
+                // but allows ctrl+f4 on Mac, while the second line set the window on a specific position.
+                // having those reversed will cause ctrl+f4 which is being used to switch between windows to stop working
+                // on always on top mode.
+                gui.setLocationRelativeTo(null);
+                gui.setLocation(
+                        (int) screenSize.getWidth() - gui.getWidth() - LOCATION_MARGIN,
+                        (int) screenSize.getHeight() - gui.getHeight() - LOCATION_MARGIN);
+
+                gui.setAlwaysOnTop(context.getModelSettings().isAlwaysOnTop());
+
+                gui.setVisible(true);
+                context.getModelSettings().setLookAndFeel(context.getModelSettings().getTheme());
+                log.info("Gui initialized");
+
+                if (isFirstTimeRunning()) {
+                    // this is the first time keepaste runs on this machine, showing the welcome dialog
+                    DialogWelcome dialogWelcome = new DialogWelcome(gui, true);
+                    GuiUtils.initHyperlinkLabel(dialogWelcome.labelTutorial, "https://www.keepaste.com/tutorial.htm");
+                    GuiUtils.initHyperlinkLabel(dialogWelcome.labelKeepsLibrary, "https://github.com/tamirkrispis/keeps-library");
+                    GuiUtils.showDialogOnCenterScreen(dialogWelcome);
+                }
+            } catch (Exception ex) {
+                log.error("Failed to initialize gui", ex);
+                System.exit(1);
+            }
+
+            context.startWindowInterceptorRunner();
+        });
+    }
+
+    private static Image getLogoImage() {
+        return ImagesUtils.getImage("/logo-white.png");
+    }
+
+    private static boolean isFirstTimeRunning() {
+        return !new File(context.getKeepsManager().getKeepsFilePathString()).exists();
+    }
+
+    private static Context generateContext(ModelSettings modelSettings) {
+        return new Context(
+                new Gui(),
+                getWindowManager(),
+                modelSettings,
+                new KeepsManager(),
+                new KeepExecutionManager(),
+                new ModelActiveWindow());
     }
 
     private static void setInitialLookAndFeel(ModelSettings modelSettings) {

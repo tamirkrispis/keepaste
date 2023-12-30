@@ -1,20 +1,14 @@
 package com.keepaste.logic.actionlisteners.dialogkeep;
 
-import lombok.Getter;
+import com.keepaste.gui.DialogKeep;
 import lombok.NonNull;
-
-import javax.swing.JTable;
 import java.awt.event.ActionListener;
 
 public abstract class BaseDialogKeepActionListener implements ActionListener {
 
-    /**
-     * the {@link JTable} to show the parameters.
-     */
-    @Getter
-    private final JTable table;
+    protected final DialogKeep dialogKeep;
 
-    BaseDialogKeepActionListener(@NonNull final JTable table) {
-        this.table = table;
+    BaseDialogKeepActionListener(@NonNull final DialogKeep dialogKeep) {
+        this.dialogKeep = dialogKeep;
     }
 }

@@ -1,13 +1,16 @@
 package com.keepaste.logic.utils;
 
+import com.keepaste.logic.Application;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URI;
+import java.util.concurrent.TimeUnit;
 
+@Log4j2
 public final class GuiUtils {
 
     private GuiUtils() {
@@ -17,7 +20,7 @@ public final class GuiUtils {
     /**
      * Constructor.
      *
-     * @param dialog The {@link JDialog} to show
+     * @param dialog The {@code JDialog} to show
      */
     public static void showDialogOnCenterScreen(@NonNull final JDialog dialog) {
         final Toolkit toolkit = java.awt.Toolkit.getDefaultToolkit();
@@ -34,14 +37,21 @@ public final class GuiUtils {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                    try {
-                        URI uri = new URI(url);
-                        Desktop.getDesktop().browse(uri);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    WebUtils.browseTo(url);
                 }
             }
         });
+    }
+
+    public static void showTargetWindowLabelMessage(String messageToShow, int showDurationInSeconds) {
+        new Thread(() -> {
+            Application.getContext().getGui().labelTargetWindow.setText(messageToShow);
+            try {
+                TimeUnit.SECONDS.sleep(showDurationInSeconds);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            Application.getContext().getGui().labelTargetWindow.setText(Application.getContext().getModelActiveWindow().getActiveWindowAppName());
+        }).start();
     }
 }

@@ -44,12 +44,12 @@ public class Context {
     /**
      * Constructor.
      *
-     * @param gui                   the {@link Gui}
-     * @param windowManager         the relevant {@link WindowManager} based on the OS
-     * @param modelSettings         the {@link ModelSettings} to be used
-     * @param keepsManager          the {@link KeepsManager} to be used
-     * @param keepExecutionManager  the {@link KeepExecutionManager} to be used
-     * @param modelActiveWindow     the {@link ModelActiveWindow} to be used
+     * @param gui                   the {@code Gui}
+     * @param windowManager         the relevant {@code WindowManager} based on the OS
+     * @param modelSettings         the {@code ModelSettings} to be used
+     * @param keepsManager          the {@code KeepsManager} to be used
+     * @param keepExecutionManager  the {@code KeepExecutionManager} to be used
+     * @param modelActiveWindow     the {@code ModelActiveWindow} to be used
      */
     public Context(@NonNull final Gui gui,
                    @NonNull final WindowManager windowManager,
@@ -91,9 +91,8 @@ public class Context {
      * Will start intercepting windows constantly.
      */
     public void startWindowInterceptorRunner() {
-        log.info("Starting window interceptor");
-
         if (modelSettings.isFocusOnWindowAndPaste()) {
+            log.info("Starting window interceptor");
             Runnable windowInterceptorRunner = new WindowInterceptorRunner(windowManager, modelActiveWindow, INTERCEPT_INTERVAL_IN_MS);
             windowInterceptorThread = new Thread(windowInterceptorRunner);
             windowInterceptorThread.setDaemon(true);

@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -121,15 +121,17 @@ public class ModelSettings extends BaseModel {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("copyToClipboard=".concat(String.valueOf(copyToClipboard)));
-        sb.append(System.getProperty(LINE_SEPARATOR));
-        sb.append("focusOnTargetWindowAndPaste=".concat(String.valueOf(focusOnWindowAndPaste)));
-        sb.append(System.getProperty(LINE_SEPARATOR));
-        sb.append("pressEnterAfterPaste=".concat(String.valueOf(pressEnterAfterPaste)));
-        sb.append(System.getProperty(LINE_SEPARATOR));
-        sb.append("theme=".concat(getTheme().getClass().getName()));
-        sb.append(System.getProperty(LINE_SEPARATOR));
-        return sb.toString();
+        return "copyToClipboard=" +
+                copyToClipboard +
+                System.getProperty(LINE_SEPARATOR) +
+                "focusOnTargetWindowAndPaste=" +
+                focusOnWindowAndPaste +
+                System.getProperty(LINE_SEPARATOR) +
+                "pressEnterAfterPaste=" +
+                pressEnterAfterPaste +
+                System.getProperty(LINE_SEPARATOR) +
+                "theme=" +
+                getTheme().getClass().getName() +
+                System.getProperty(LINE_SEPARATOR);
     }
 }

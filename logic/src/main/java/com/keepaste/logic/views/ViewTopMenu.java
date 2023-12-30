@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -69,9 +69,30 @@ public class ViewTopMenu {
 
         JMenu settingsMenu = new JMenu("Settings");
 
-        JMenu flowMenuItem = new JMenu("Flow");
-
+        final var flowMenuItem = getFlowMenuItem();
         settingsMenu.add(flowMenuItem);
+
+        final var themesMenuItem = getThemesMenuItem();
+        settingsMenu.add(themesMenuItem);
+
+        if (OperatingSystemUtils.getOperatingSystemType() != OperatingSystemUtils.OperatingSystemType.WINDOWS) {
+            final var pathMenuItem = getPathMenuItem();
+            settingsMenu.add(pathMenuItem);
+        }
+
+        menuItemMain.add(settingsMenu);
+        menuItemMain.add(new JSeparator());
+
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(new ExitActionListener());
+        menuItemMain.add(exitMenuItem);
+
+        menuItemAbout.addMouseListener(new DialogAboutActionListener());
+        menuItemHeart.addMouseListener(new DialogHeartActionListener());
+    }
+
+    private static JMenu getFlowMenuItem() {
+        JMenu flowMenuItem = new JMenu("Flow");
 
         JCheckBoxMenuItem copyToClipboardCheckBoxMenuItem = new JCheckBoxMenuItem("1. Copy keep to clipboard", Application.getContext().getModelSettings().isCopyToClipboard());
         JCheckBoxMenuItem focusOnTargetWindowCheckBoxMenuItem = new JCheckBoxMenuItem("2. Focus on target window and paste", Application.getContext().getModelSettings().isFocusOnWindowAndPaste());
@@ -89,7 +110,17 @@ public class ViewTopMenu {
         AutoEnterActionListener autoEnterActionListener = new AutoEnterActionListener(copyToClipboardCheckBoxMenuItem, focusOnTargetWindowCheckBoxMenuItem);
         autoEnterCheckBoxMenuItem.addActionListener(autoEnterActionListener);
         flowMenuItem.add(autoEnterCheckBoxMenuItem);
+        return flowMenuItem;
+    }
 
+    private static JMenuItem getPathMenuItem() {
+        JMenuItem pathMenuItem = new JMenuItem("$PATH");
+        PathMenuItemActionListener pathMenuItemActionListener = new PathMenuItemActionListener();
+        pathMenuItem.addActionListener(pathMenuItemActionListener);
+        return pathMenuItem;
+    }
+
+    private static JMenu getThemesMenuItem() {
         JMenu themesMenuItem = new JMenu("Themes");
         ButtonGroup themesRadioButtonGroup = new ButtonGroup();
         ThemesMenuItemActionListener themesMenuItemActionListener = new ThemesMenuItemActionListener();
@@ -108,24 +139,7 @@ public class ViewTopMenu {
 
         themesMenuItem.add(darkModeRadioMenuItem);
         themesMenuItem.add(lightModeRadioMenuItem);
-        settingsMenu.add(themesMenuItem);
-
-        if (OperatingSystemUtils.getOperatingSystemType() != OperatingSystemUtils.OperatingSystemType.WINDOWS) {
-            JMenuItem pathMenuItem = new JMenuItem("$PATH");
-            PathMenuItemActionListener pathMenuItemActionListener = new PathMenuItemActionListener();
-            pathMenuItem.addActionListener(pathMenuItemActionListener);
-            settingsMenu.add(pathMenuItem);
-        }
-
-        menuItemMain.add(settingsMenu);
-        menuItemMain.add(new JSeparator());
-
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
-        exitMenuItem.addActionListener(new ExitActionListener());
-        menuItemMain.add(exitMenuItem);
-
-        menuItemAbout.addMouseListener(new DialogAboutActionListener());
-        menuItemHeart.addMouseListener(new DialogHeartActionListener());
+        return themesMenuItem;
     }
 
 }

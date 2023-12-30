@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,7 +41,7 @@ public final class ImagesUtils {
     static final Random RANDOM = new Random();
     private static final String KEEPASTE = "keepaste";
     public static final int DEFAULT_COLOR_VAL = 128;
-    public static final int DEFAULT_ICON_WIDTH = 15;
+    public static final int DEFAULT_ICON_WIDTH_HEIGHT = 15;
     public static final int COLOR_PART_BOUND = 256;
     public static final int COLOR_PART_LIGHTER_VAL = 50;
     public static final int KEEP_ICON_FONT_SIZE = 12;
@@ -79,10 +79,10 @@ public final class ImagesUtils {
     }
 
     /**
-     * Will return an {@link ImageIcon} from a file path.
+     * Will return an {@code ImageIcon} from a file path.
      *
      * @param imagePath the image file path
-     * @return an {@link ImageIcon} from a filepath.
+     * @return an {@code ImageIcon} from a filepath.
      */
     public static ImageIcon getImageIconFromFilePath(String imagePath) {
         Image image = getImage(imagePath);
@@ -94,10 +94,10 @@ public final class ImagesUtils {
     }
 
     /**
-     * Will return an {@link Image} from a file path.
+     * Will return an {@code Image} from a file path.
      *
      * @param imagePath the image file path
-     * @return an {@link Image} from a file path.
+     * @return an {@code Image} from a file path.
      */
     public static Image getImage(String imagePath) {
         try {
@@ -129,8 +129,8 @@ public final class ImagesUtils {
      * @param color             the color of the icon
      */
     public static void generateIcon(@NonNull final String commandExecutable, Color color) {
-        int width = DEFAULT_ICON_WIDTH;
-        int height = DEFAULT_ICON_WIDTH;
+        int width = DEFAULT_ICON_WIDTH_HEIGHT;
+        int height = DEFAULT_ICON_WIDTH_HEIGHT;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
@@ -153,12 +153,7 @@ public final class ImagesUtils {
         }
 
         // Calculate a lighter color based on the random color
-        Color lighterColor = new Color(color.getRed() > COLOR_PART_LIGHTER_VAL ? color.getRed() - COLOR_PART_LIGHTER_VAL : color.getRed(),
-                color.getGreen() > COLOR_PART_LIGHTER_VAL ? color.getGreen() - COLOR_PART_LIGHTER_VAL :  color.getGreen(),
-                color.getBlue() > COLOR_PART_LIGHTER_VAL ? color.getBlue() - COLOR_PART_LIGHTER_VAL : color.getBlue());
-
-        // Create gradient paint for the circle
-        GradientPaint gradientPaint = new GradientPaint(0, 0, lighterColor, width, height, color, true);
+        final var gradientPaint = getGradientPaint(color, width, height);
 
         // Apply gradient paint to the circle
         g2d.setPaint(gradientPaint);
@@ -184,12 +179,22 @@ public final class ImagesUtils {
         g2d.dispose();
 
         // Save image as PNG
+        String imagePath = getCommandsIconsPath(commandExecutable);
         try {
-            ImageIO.write(image, "png", new File(getCommandsIconsPath(commandExecutable)));
-            log.info("Image for image path [{}] was created", commandExecutable);
+            ImageIO.write(image, "png", new File(imagePath));
+            log.info("Image for image path [{}] was created", imagePath);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(String.format("Failed to write to image path [%s]", imagePath), e);
         }
+    }
+
+    private static GradientPaint getGradientPaint(Color color, int width, int height) {
+        Color lighterColor = new Color(color.getRed() > COLOR_PART_LIGHTER_VAL ? color.getRed() - COLOR_PART_LIGHTER_VAL : color.getRed(),
+                color.getGreen() > COLOR_PART_LIGHTER_VAL ? color.getGreen() - COLOR_PART_LIGHTER_VAL :  color.getGreen(),
+                color.getBlue() > COLOR_PART_LIGHTER_VAL ? color.getBlue() - COLOR_PART_LIGHTER_VAL : color.getBlue());
+
+        // Create gradient paint for the circle
+        return new GradientPaint(0, 0, lighterColor, width, height, color, true);
     }
 
     private static String getCommandsIconsPath(String commandExecutable) {

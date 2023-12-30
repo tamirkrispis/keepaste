@@ -1,17 +1,17 @@
 /**
  * Keepaste - The keep and paste program (http://www.keepaste.com)
  * Copyright (C) 2023 Tamir Krispis
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -99,23 +99,9 @@ public class Keep extends KeepNode {
 
         if (parameters != null) {
             for (KeepParameter parameter : parameters) {
-                String color = "#b75300";
-                String currentValue = "";
-                if (parameter.isGlobal()) {
-                    color = "#58a6ff";
-                }
-                if (KeepExecutionManager.getGLOBAL_PARAMETER_VALUES_MAP().containsKey(parameter.getName())) {
-                    currentValue = ", <b>\"".concat(
-                            KeepExecutionManager.getGLOBAL_PARAMETER_VALUES_MAP().get(parameter.getName())).concat("\"</b>");
-                }
-                String type;
-                if (StringUtils.isEmpty(parameter.getPhrase())) {
-                    type = "free-text";
-                } else if (parameter.getPhrase().startsWith("[")) {
-                    type = "values";
-                } else {
-                    type = "command";
-                }
+                final var color = getColor(parameter);
+                final var currentValue = getCurrentValue(parameter);
+                final var type = getType(parameter);
                 String command = !StringUtils.isEmpty(parameter.getPhrase()) ? "\"".concat(parameter.getPhrase()).concat("\"") : "";
                 sb.append(String.format("<b style=\"color: %s\">%s</b> (%s%s)<blockquote><i>%s</i></blockquote>",
                         color, parameter.getName(), type, currentValue, StringEscapeUtils.escapeHtml4(command)));
@@ -124,5 +110,34 @@ public class Keep extends KeepNode {
         }
         sb.append("</html>");
         return sb.toString();
+    }
+
+    private static String getType(KeepParameter parameter) {
+        String type;
+        if (StringUtils.isEmpty(parameter.getPhrase())) {
+            type = "free-text";
+        } else if (parameter.getPhrase().startsWith("[")) {
+            type = "values";
+        } else {
+            type = "command";
+        }
+        return type;
+    }
+
+    private static String getCurrentValue(KeepParameter parameter) {
+        String currentValue = "";
+        if (KeepExecutionManager.GLOBAL_PARAMETER_VALUES_MAP.containsKey(parameter.getName())) {
+            currentValue = ", <b>\"".concat(
+                    KeepExecutionManager.GLOBAL_PARAMETER_VALUES_MAP.get(parameter.getName())).concat("\"</b>");
+        }
+        return currentValue;
+    }
+
+    private static String getColor(KeepParameter parameter) {
+        String color = "#b75300";
+        if (parameter.isGlobal()) {
+            color = "#58a6ff";
+        }
+        return color;
     }
 }
